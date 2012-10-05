@@ -251,6 +251,8 @@
 				typeName : uiTypeName, 
 				_insCount: 0
 			});
+			// 搞定，返回 ...
+			return NutzUI.types[uiTypeName];
 		}
 		// 如果是一个绑定字符串
 		if(/^(@)([a-zA-Z0-9._-]+)$/.test(uiTypeName)){
