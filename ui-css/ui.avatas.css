@@ -1,0 +1,98 @@
+.avatas {
+	padding:10px;
+	width:100%;
+	height:100%;
+	overflow: auto;
+}
+
+.avatas-process {
+	font-size: 16px;
+	margin-left:20px;
+}
+
+.avatas-process-ing {
+	color:#00F;
+}
+
+.avatas-process-warn {
+	color:#F00;
+	font-weight: bold;
+}
+
+.avatas-process-done {
+	color:#080;
+}
+
+
+.avatas-forms {
+	padding:30px;
+}
+
+.avatas-forms table {
+	background-color:#FFF;
+}
+
+.avatas-forms td {
+	background-color:#EEE;
+}
+
+.avatas-uploader {
+	padding: 16px;
+}
+
+.avatas-uploader-file input{
+	font-size: 18px;
+}
+
+.avatas-uploader label {
+	display: block;
+	padding:4px 10px;
+	margin: 2px 0;
+	font-size:11px;
+	color:#080;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.avatas-uploader label:hover {
+	background-color:#F5F5F5;
+}
+
+.avatas-uploader-btn {
+	background-color:#07E;
+	color:#EEE;
+	font-size:12px;
+	cursor: pointer;
+	display: inline-block;
+	padding:6px 20px;
+	border-radius: 2px;
+}
+
+.avatas-uploader-btn:hover {
+	background-color: #08F;
+	color:#FFF;
+	text-shadow:1px 1px 0 #000;
+}
+
+.avatas-sz {
+	font-size:16px;
+	color:#888;
+	padding:20px 30px;
+	text-align: right;
+}
+
+.avatas-pic {
+	padding:10px;
+}
+
+.avatas-pic img {
+	border:1px solid #DDD;
+	border-radius: 2px;
+	box-shadow: 3px 3px 5px #888;
+}
+
+.avatas-tip {
+	font-size:14px;
+	color:#444;
+	padding:10px;
+}
