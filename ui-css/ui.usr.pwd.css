@@ -1,0 +1,33 @@
+.usr-pwd {
+	padding: 30px 40px;
+}
+
+.usr-pwd-fnm {
+	text-align: right;
+	color: #666;
+}
+
+input.usr-pwd-input {
+	font-size:14px;
+	padding:6px 8px;
+	width: 200px;
+}
+
+.usr-pwd-submit {
+	padding: 8px 24px;
+	color:#CCC;
+	background-color: #AAA;
+	font-size:14px;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.usr-pwd-submit-on {
+	color:#EEE;
+	background-color: #07E;
+}
+
+.usr-pwd-submit-on:hover {
+	background-color: #08F;
+	color:#FFF;
+}

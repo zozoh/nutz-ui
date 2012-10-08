@@ -93,7 +93,7 @@ ui("avatas", {
 			html += '    <td class="avatas-sz">' + sz + '</div>';
 			html += '    <td class="avatas-pic"><img src="' + (imgsrc + sz) + '"';
 			html += '        width="' + w + '" height="' + h + '"/></td>';
-			html += '    <td class="avatas-uploader disselect">';
+			html += '    <td class="avatas-uploader diss">';
 			html += '        <div class="avatas-uploader-file">';
 			html += '            <input type="file" accept="image/jpeg,image/gif,image/png">';
 			html += '        </div>';

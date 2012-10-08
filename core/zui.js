@@ -207,7 +207,7 @@
 
 			// 有初始化数据，先获取再执行初始化流程
 			if(typeof theBind.option.data == "function"){
-				var reData = theBind.option.data.call(this, function(reData){
+				var reData = theBind.option.data.call(theBind, function(reData){
 					theBind.init(reData);
 				});
 				if(reData){
@@ -397,6 +397,12 @@
 	     * 界面显示给用户一个警告信息
 	     */
 	    warn : function(msg) {
+	    	alert(this.msg(msg));
+	    },
+	    /*----------------------------------------------------------------------
+	     * 界面显示给用户一个信息窗口
+	     */
+	    info : function(msg) {
 	    	alert(this.msg(msg));
 	    },
 	    /*----------------------------------------------------------------------
