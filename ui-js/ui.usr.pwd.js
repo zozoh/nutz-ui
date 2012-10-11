@@ -11,20 +11,20 @@ ui("usr.pwd", {
 		var html = '<div class="usr-pwd">';
 		html += '<table cellspacing="0" cellpadding="8">';
 		html += '    <tr>';
-		html += '        <td class="usr-pwd-fnm">' + this.msg('usr.pwd.old') + '</td>';
-		html += '        <td><input class="usr-pwd-old usr-pwd-input"></td>';
+		html += '        <td class="usr-pwd-fnm">' + $z.ui.msg('usr.pwd.old') + '</td>';
+		html += '        <td><input class="usr-pwd-old usr-pwd-input" type="password"></td>';
 		html += '    </tr>';
 		html += '    <tr>';
-		html += '        <td class="usr-pwd-fnm">' + this.msg('usr.pwd.new') + '</td>';
-		html += '        <td><input class="pwd-new usr-pwd-input"><span class="pwd-tester"></span></td>';
+		html += '        <td class="usr-pwd-fnm">' + $z.ui.msg('usr.pwd.new') + '</td>';
+		html += '        <td><input class="pwd-new usr-pwd-input" type="password"><span class="pwd-tester"></span></td>';
 		html += '    </tr>';
 		html += '    <tr>';
-		html += '        <td class="usr-pwd-fnm">' + this.msg('usr.pwd.re') + '</td>';
-		html += '        <td><input class="pwd-re usr-pwd-input"><span class="pwd-verifier"></span></td>';
+		html += '        <td class="usr-pwd-fnm">' + $z.ui.msg('usr.pwd.re') + '</td>';
+		html += '        <td><input class="pwd-re usr-pwd-input" type="password"><span class="pwd-verifier"></span></td>';
 		html += '    </tr>';
 		html += '    <tr>';
 		html += '        <td>&nbsp;</td>';
-		html += '        <td><a class="usr-pwd-submit diss">' + this.msg('usr.pwd.submit') + '</a></td>';
+		html += '        <td><a class="usr-pwd-submit diss">' + $z.ui.msg('usr.pwd.submit') + '</a></td>';
 		html += '    </tr>';
 		html += '</table>';
 		html += '</div>';
@@ -45,8 +45,8 @@ ui("usr.pwd", {
 		".usr-pwd-submit-on" : function() {
 			var bind = $z.ui.getBind(this);
 			var form = {
-				"old" : bind.selection.find(".usr-pwd-old").val(),
-				"pwd" : bind.selection.find(".pwd-new").val()
+				"old" : bind.jq(".usr-pwd-old").val(),
+				"pwd" : bind.jq(".pwd-new").val()
 			};
 			// 对密码进行加密
 			var pwd_encrypt_method = bind.option.encrypt;
@@ -57,8 +57,9 @@ ui("usr.pwd", {
 				};
 			}
 			// 提交请求
-			$z.ajax.post(bind.url("/u/do/chgpwd"), form, function(re){
+			$z.ajax.post($z.ui.url("/u/do/chgpwd"), form, function(re){
 				$z.ui.info($z.ui.msg("usr.pwd.changed"));
+				bind.jq("input").val("");
 			});
 		}
 	},

@@ -24,6 +24,21 @@
 	            return null;
 	        return array[index];
 	    },
+	    // 深层获取对象的某个字段的值
+	    // obj 对象
+	    // fldpath 字段路径，比如 "x.y.z"
+	    // dft 如果没有值，默认返回啥
+	    val : function(obj, fldPath, dft) {
+	    	if(!obj)
+	    		return dft;
+			var flds = fldPath.split(".");
+			for(var i=0;i<flds.length;i++){
+				obj = obj[flds[i]];
+				if(!obj)
+					return "";
+			}
+			return obj ? obj : dft;
+		},
 		//------------------------------------------------------------------
 	    // 将一个 JS 对象或者数组进行浅层克隆
 	    clone: function(obj) {

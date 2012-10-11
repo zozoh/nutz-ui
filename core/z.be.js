@@ -141,11 +141,15 @@
 	                $(this).blur();
 	            }
 	        };
+	        var onKeyup = function() {
+	        	var minWidth = $(this).attr("min-width") * 1;
+	        	$(this).css("width", Math.max(minWidth, this.value.length * 16));
+	        };
 	        var func = function() {
 	            var me = $(this);
 	            var opt = me.data("z-editit-opt");
 	            opt.after.call(me.parent(), me.val(), me.attr("old-val"));
-	            me.unbind("keydown",onKeydown).remove();
+	            me.unbind("keydown",onKeydown).unbind("keyup", onKeyup).remove();
 	        };
 	        // 准备显示输入框
 	        var val = opt.text || me.text();
@@ -155,13 +159,21 @@
 	            "width": opt.width || me.outerWidth(),
 	            "height": opt.height || me.outerHeight(),
 	            "position": "absolute",
+	            "font-family" : "Courier",
 	            "z-index": 999999
 	        };
 
 	        // 显示输入框
-	        var jq = $(html).prependTo(me).val(val).attr("old-val", val).addClass("z_editit").css(css);
+	        var jq = $(html).prependTo(me).val(val)
+	        		.attr("old-val", val)
+	        		.attr("min-width", css.width)
+	        		.addClass("z_editit")
+	        		.css(css);
 	        jq.data("z-editit-opt", opt);
-	        return jq.one("blur", func).one("change", func).keydown(onKeydown).select();
+	        return jq.one("blur", func).one("change", func)
+	        		.keydown(onKeydown)
+	        		.keyup(onKeyup)
+	        		.select();
 	    } // ~ End of editIt
 	});
 })(window.jQuery, window.NutzUtil);

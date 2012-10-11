@@ -72,6 +72,7 @@
 			this.delegate("input.pwd-re", "keyup", function(){
 				_do_check(selection, opt);
 			});
+			return this;
 		}
-	})
+	});
 })(window.jQuery);

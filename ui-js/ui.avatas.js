@@ -78,10 +78,10 @@ var doUpload = function(file, url, headers) {
 // .......................................... 开始定义控件
 ui("avatas", {
 	on_init : function(){
-		var imgsrc = this.url("/avata/" + this.option.cate + "/" + this.option.nm + "/");
+		var imgsrc = $z.ui.url("/avata/" + this.option.cate + "/" + this.option.nm + "/");
 
 		var html = '<div class="avatas">';
-		html += '<div class="avatas-tip">' + this.msg('avata.tip') + '</div>'
+		html += '<div class="avatas-tip">' + $z.ui.msg('avata.tip') + '</div>'
 		html += '<div class="avatas-forms"><table border="0" cellspacing="1">'
 		for(var i=0; i<this.option.sizes.length; i++){
 			var sz = this.option.sizes[i];
@@ -98,9 +98,9 @@ ui("avatas", {
 			html += '            <input type="file" accept="image/jpeg,image/gif,image/png">';
 			html += '        </div>';
 			html += '        <label for="' + trID + '">';
-			html += '            <input id="' + trID + '" type="checkbox" checked>' + this.msg('avata.modi');
+			html += '            <input id="' + trID + '" type="checkbox" checked>' + $z.ui.msg('avata.modi');
 			html += '        </label>';
-			html += '        <span class="avatas-uploader-btn">' + this.msg('avata.upload') + '</span>';
+			html += '        <span class="avatas-uploader-btn">' + $z.ui.msg('avata.upload') + '</span>';
 			html += '        <span class="avatas-process"></span>';
 			html += '    </td>';
 			html += '</tr>';
@@ -127,7 +127,7 @@ ui("avatas", {
 			}
 			var bind = $z.ui.getBind(jq);
 			var opt = bind.option;
-			var url = bind.url("/avata/upload");
+			var url = $z.ui.url("/avata/upload");
 			doUpload.call(jq, fInput.files[0], url, {
 				cate : opt.cate,
 				nm : opt.nm,

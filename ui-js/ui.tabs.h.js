@@ -39,7 +39,7 @@ ui("tabs.h", {
 				html += '   href="#tabs.h:hlt=' + (i++) + '"'
 				html += '   tabs-h-chute-key="' + key + '">';
 				html += o.text;
-				html += '</>';
+				html += '</a>';
 			}
 		}
 		html += '</div>';
@@ -52,6 +52,12 @@ ui("tabs.h", {
 	},
 	gasket : function(nm){
 		return nm == "arena" ? this.jq(".tabs-h>.tabs-h-arena") : null;
+	},
+	on_resize : function(w, h) {
+		var jChut = this.selection.children(".tabs-h").children(".tabs-h-chute");
+		var jArena = this.selection.children(".tabs-h").children(".tabs-h-arena");
+		var arenaWidth = w - jChut.outerWidth();
+		jArena.css("width", arenaWidth);
 	}
 });
 })(window.jQuery, window.NutzUI, window.NutzUtil);

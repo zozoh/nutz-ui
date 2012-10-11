@@ -6,11 +6,12 @@
 }
 
 .tabs-h-chute {
-	width: 120px;
+	width: 130px;
+	padding-left: 10px;
 	line-height:28px;
 	position: absolute;
 	top:20px;
-	left:10px;
+	left:0px;
 }
 
 .tabs-h-chute-item {

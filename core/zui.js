@@ -21,15 +21,6 @@
 		ui : function(){
 			return NutzUI.types[this.typeName];
 		},
-		// 提供给 bind 对象，获取真实的 URL 的方法
-		// 即，它会从 document.body 里获取 url 的前缀
-		url : function(url){
-			return ($(document.body).attr("nutz-url-prefix") || "") + url;
-		},
-		// 提供给 bind 对象，获取一个多国语言字符串的方法
-		msg : function(key){
-			return $z.ui.msg(key);
-		},
 		// 获取本 bind 内部的扩展点的 jq 对象
 		gasket : function(name){
 			return this.ui().gasket.call(this, name);
@@ -50,8 +41,13 @@
 				width : this.selection.width(),
 				height: this.selection.height()
 			};
-			// 执行回调
+			// 调用尺寸改变事件
 			this.ui().on_resize.call(this, sz.width, sz.height);
+			// 递归改变自己所有子 bind 的尺寸
+			for(var key in this.children) {
+				if(this.children[key].ID != this.ID)
+					this.children[key].resize();
+			}
 			// 返回 bind 自身以便链式赋值
 			return this;
 		},
@@ -95,6 +91,11 @@
 			return this;
 		},
 		depose : function(){
+			// 注销全部的子绑定
+			if(this.children)
+				for (var key in this.children)
+					this.children[key].depose();
+			// 注销自己
 			this.ui().on_depose.call(this);
 			// 注销父 bind 的记录
 			var p = this.parent();
@@ -197,8 +198,8 @@
 			if(gasketName){
 				var pBind = theBind.parent();
 				if(pBind){
-					pBind.children[gasketName] = bind;
-					bind.gasketPath = pBind.gasketPath + gasketName + "/";
+					pBind.children[gasketName] = theBind;
+					theBind.gasketPath = pBind.gasketPath + gasketName + "/";
 				}
 			}
 
@@ -393,6 +394,13 @@
 	        var li = $("#__msg__ ." + key.replace(/[.]/g, "_"));
 	        return li.size() > 0 ? $(li[0]).html() : ( defval ? defval : key);
 	    },
+	    /*----------------------------------------------------------------------
+	     * 提供给 bind 对象，获取真实的 URL 的方法
+		 * 即，它会从 document.body 里获取 url 的前缀
+		 */
+	    url : function(url){
+			return ($(document.body).attr("nutz-url-prefix") || "") + url;
+		},
 	    /*----------------------------------------------------------------------
 	     * 界面显示给用户一个警告信息
 	     */

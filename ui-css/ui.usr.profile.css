@@ -1,0 +1,174 @@
+.usr-profile {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.usr-profile-brief {
+	position: relative;
+	top:0;
+	left:0;
+	height: 76px;
+	padding: 8px 16px;
+}
+
+.usr-profile-brief img {
+	float: left;
+	margin:0 10px 0 0;
+	border:1px solid #DDD;
+	border-radius: 8px;
+}
+
+.usr-profile-brief b {
+	font-weight: normal;
+	line-height: 30px;
+	height: 30px;
+	padding:0 6px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left:2px;
+	
+}
+
+.usr-profile-brief .usr-profile-loginName {
+	font-size:18px;
+	color:#888;
+}
+
+.usr-profile-brief .usr-profile-brief-realName {
+	font-size: 14px;
+	color:#000;
+	font-weight: bold;
+}
+
+.usr-profile-brief .usr-profile-brief-title {
+	color: #080;
+}
+
+.usr-profile-brief .usr-profile-brief-slogan {
+	color:#888;
+	display: block;
+}
+
+.usr-profile-add {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	cursor: pointer;
+	color:#00F;
+}
+
+.usr-profile-add-menu {
+	min-height: 80px;
+	min-width: 80px;
+	border:1px solid #DDD;
+	background-color: rgba(255,255,255,0.8);
+	border-radius: 2px;
+	padding:6px;
+}
+
+.usr-profile-add-menu-hr {
+	margin:8px 4px;
+	height:1px;
+	line-height: 1px;
+	background-color: #DDD;
+}
+
+.usr-profile-add-menu-brief-item {
+	height:24px;
+	line-height: 24px;
+	cursor: pointer;
+	padding:0 6px;
+	color:#88F;
+}
+
+.usr-profile-add-menu-brief-item:hover {
+	text-decoration: underline;
+}
+
+.usr-profile-add-menu-field-item {
+	padding:6px 8px;
+	position: relative;
+}
+
+.usr-profile-add-menu-field-item ul {
+	padding:0;
+	margin:0;
+	list-style: none;
+	position: absolute;
+	top:6px;
+	right:0;
+}
+
+.usr-profile-add-menu-field-item li {
+	float: left;
+	font-size: 10px;
+	padding:0 4px;
+	border-left:1px solid #EEE;
+	color:#88F;
+	cursor:pointer;
+	font-weight: normal;
+}
+
+.usr-profile-add-menu-field-item li:hover {
+	text-decoration: underline;
+}
+
+.usr-profile-values {
+	position: absolute;
+	left:0;
+	bottom:0;
+	overflow: auto;
+	padding: 10px 20px;
+}
+
+.usr-profile-values h4 {
+	padding: 3px;
+	border-top:1px dashed #DDD;
+	color: #888;
+	margin:0;
+}
+
+.usr-profile-fields-item {
+	position: relative;
+}
+
+.usr-profile-fields-item-nm {
+	text-align: right;
+	color:#888;
+	float: left;
+	padding: 4px 6px;
+	width:30%;
+}
+
+.usr-profile-fields-item-val {
+	color:#000;
+	float:left;
+	padding: 4px 6px;
+	width:70%;
+}
+
+.usr-profile-fields-item-del {
+	position: absolute;
+	right: 2px;
+	top: 1px;
+	color: #08F;
+	cursor: pointer;
+}
+
+.usr-profile-fields-item-del:hover {
+	color:#00F;
+}
+
+.usr-profile-brief-about {
+	position: absolute;
+	right:0;
+	bottom:0;
+	padding: 8px;
+	border:1px solid #DDD;
+}
+
+.usr-profile-brief-about textarea {
+	width: 100%;
+	height: 100%;
+}
