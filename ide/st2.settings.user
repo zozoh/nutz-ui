@@ -1,0 +1,6 @@
+// sublime text 2 Settings User -- 覆盖到 User/Prefrences.sublime-settings
+
+{
+    // 使用tab代替空格， 这个默认设置仅仅对新建的文件有用， 如果是打开别的文件，可能需要修改右下角状态栏，修改为 “Spaces:4”
+    "translate_tabs_to_spaces": true
+}

@@ -1,0 +1,15 @@
+// sublime text 2 Settings User -- 覆盖到 User/Default(OSX).sublime-keymap
+[
+    /* 这里的配置仿照Eclisp里常用快捷键 */
+
+    // 上下换行
+    { "keys": ["alt+up"], "command": "swap_line_up" },
+    { "keys": ["alt+down"], "command": "swap_line_down" },
+
+    // 复制一行
+    { "keys": ["alt+super+up"], "command": "duplicate_line" },
+    { "keys": ["alt+super+down"], "command": "duplicate_line" },
+    
+    // 删除一行  这里没有使用 super+d 因为那是一个st2中非常常用且有用的快捷键
+    { "keys": ["ctrl+d"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"} }
+]
