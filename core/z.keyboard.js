@@ -20,7 +20,7 @@
         '16': 'shift',
         '18': 'alt'
     };
-    if($.browser.webkit) {
+    if ($.browser.webkit) {
         KEYS[os.mac ? '91' : '17'] = 'ctrl';
     } else {
         KEYS[os.mac && !$.browser.opera ? '224' : '17'] = 'ctrl';
@@ -34,18 +34,18 @@
          *  - .keyboard-on-alt
          */
         watch: function() {
-            if(!window.keyboard) {
+            if (!window.keyboard) {
                 window.keyboard = {};
                 // 监视键盘事件
                 $(window).keydown(function(e) {
                     var key = KEYS['' + e.which];
-                    if(key) {
+                    if (key) {
                         window.keyboard[key] = true;
                         $('.keyboard-info').addClass('keyboard-on-' + key);
                     }
                 }).keyup(function(e) {
                     var key = KEYS['' + e.which];
-                    if(key) {
+                    if (key) {
                         window.keyboard[key] = false;
                         $('.keyboard-info').removeClass('keyboard-on-' + key);
                     }

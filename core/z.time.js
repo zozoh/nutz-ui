@@ -17,7 +17,7 @@
         //   month : 1-12 表示12个月
         monthDays: function(year, month) {
             // 支持直接给一个对象
-            if(typeof year == 'object') {
+            if (typeof year == 'object') {
                 month = year.month;
                 year = year.year;
             }
@@ -26,17 +26,17 @@
             var re = [];
             // 补齐一周的开始
             var wday = d.getDay();
-            if(wday > 0) {
+            if (wday > 0) {
                 // 获取上一个月的天数
                 var prevDate = this.monthDate(year, month - 1);
                 // 开始补齐
-                for(var i = wday - 1; i >= 0; i--) {
+                for (var i = wday - 1; i >= 0; i--) {
                     re[i] = prevDate--;
                 }
             }
             // 添加本月
             var date = this.monthDate(year, month);
-            for(var i = 0; i < date; i++) {
+            for (var i = 0; i < date; i++) {
                 re.push((i + 1));
             }
             return re;
@@ -44,15 +44,15 @@
         //---------------------------------------------------------------------------------------
         // 获得某个日期，是今年的第几天，每年的 1 月 1 日，本函数计算结果为 1
         yearDayCount: function(d) {
-            if(typeof d == 'string') d = this.d(d).year;
+            if (typeof d == 'string') d = this.d(d).year;
 
             var isLeapYear = this.leapYear(d.year);
             var re = 0;
             // 计算今年的天数
-            for(var i = 0; i < (d.month - 1); i++) {
+            for (var i = 0; i < (d.month - 1); i++) {
                 re += MONTH[i];
                 // 闰年，二月加一天
-                if(i == 1 && isLeapYear) re++;
+                if (i == 1 && isLeapYear) re++;
             }
             re += d.date;
             return re;
@@ -74,15 +74,15 @@
         //   year  : 可以为四位或两位，如果两位表示19xx
         //   month : 1-12 表示12个月
         monthDate: function(year, month) {
-            if(typeof year == 'object') {
+            if (typeof year == 'object') {
                 year = year.year;
                 month = year.month;
-            } else if(month <= 0) {
+            } else if (month <= 0) {
                 year -= 1;
                 month = 12;
             }
             var d = MONTH[month - 1];
-            return(d < 30 && this.leapYear(year)) ? d + 1 : d;
+            return (d < 30 && this.leapYear(year)) ? d + 1 : d;
         },
         //---------------------------------------------------------------------------------------
         // 比较两个日期
@@ -93,7 +93,7 @@
         //---------------------------------------------------------------------------------------
         // 根据 offset 生成一个新日期, offset 是一个天数，可正可负
         offDate: function(d, offset) {
-            if(offset == 0) return d;
+            if (offset == 0) return d;
             var days = this.dayCount(d);
             days += offset;
             return this.d(days);
@@ -101,7 +101,7 @@
         //---------------------------------------------------------------------------------------
         // 判断一年是否为闰年
         leapYear: function(year) {
-            return(year % 4 == 0) && (year % 400 == 0 || year % 100 != 0);
+            return (year % 4 == 0) && (year % 400 == 0 || year % 100 != 0);
         },
         //---------------------------------------------------------------------------------------
         // 判断一年（不包括自己）之前有多少个闰年
@@ -135,7 +135,7 @@
         // 其中 day 表示星期几，数值为 0-6
         d: function(str) {
             // 根据绝对天数
-            if(typeof str == 'number') {
+            if (typeof str == 'number') {
                 var yy = parseInt(str / 365);
                 // 先来个大概
                 var leapYears = this.countLeapYear(yy);
@@ -149,20 +149,20 @@
                 yyDay = str - yyDay;
                 // 根据今年天数得到月份
                 var i = 0;
-                for(; i < MONTH.length; i++) {
+                for (; i < MONTH.length; i++) {
                     var days = MONTH[i];
-                    if(z.leapYear(yy) && i == 1) days++;
-                    if(yyDay <= days) break;
+                    if (z.leapYear(yy) && i == 1) days++;
+                    if (yyDay <= days) break;
                     yyDay -= days;
                 }
                 return this.d(yy + '-' + (i + 1) + '-' + yyDay);
             }
             // 如果有空格，截断先
             var pos = str.indexOf(' ');
-            if(pos > 0) str = str.substring(0, pos);
+            if (pos > 0) str = str.substring(0, pos);
             // 根据字符串
             var ss = str.split('-');
-            if(ss.length < 3) {
+            if (ss.length < 3) {
                 ss.push(1).push(1);
             }
             var now = new Date(ss[0] * 1, ss[1] * 1 - 1, ss[2] * 1);
@@ -177,7 +177,7 @@
         // 根据 hh:mm:ss，或者一个秒数 生成一个时间对象
         tm: function(str) {
             var re;
-            if(typeof str == 'number') {
+            if (typeof str == 'number') {
                 re = {
                     seconds: Math.min(str, 86400)
                 };
@@ -188,7 +188,7 @@
                 return re;
             } else {
                 var ss = str.split(':');
-                if(ss.length < 2) {
+                if (ss.length < 2) {
                     ss.push('00');
                     ss.push('00');
                 }
@@ -198,7 +198,7 @@
                     ss: ss[2] * 1
                 };
                 // 检查时间的合法性
-                if(re.hh * 1 != re.hh || re.hh < 0 || re.hh > 23 || re.mm * 1 != re.mm || re.mm < 0 || re.mm > 59 || re.ss * 1 != re.ss || re.ss < 0 || re.ss > 59) {
+                if (re.hh * 1 != re.hh || re.hh < 0 || re.hh > 23 || re.mm * 1 != re.mm || re.mm < 0 || re.mm > 59 || re.ss * 1 != re.ss || re.ss < 0 || re.ss > 59) {
                     throw 'Wrong time format [' + str + "], it should be 'hh:mm:sss'!";
                 }
                 re.seconds = re.hh * 3600 + re.mm * 60 + re.ss;

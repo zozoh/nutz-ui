@@ -21,11 +21,11 @@
             // 格式化参数
             jq = $(jq);
             opt = opt || {};
-            if(typeof opt == 'function') {
+            if (typeof opt == 'function') {
                 opt = {
                     after: opt
                 };
-            } else if(typeof opt == 'number') {
+            } else if (typeof opt == 'number') {
                 opt = {
                     speed: opt
                 };
@@ -40,8 +40,8 @@
                 'height': h
             }).insertAfter(jq);
             // 删除元素
-            if(opt.appendTo) jq.appendTo(opt.appendTo);
-            else if(opt.prependTo) jq.prependTo(opt.prependTo);
+            if (opt.appendTo) jq.appendTo(opt.appendTo);
+            else if (opt.prependTo) jq.prependTo(opt.prependTo);
             else jq.remove();
             // 显示动画
             holder.animate({
@@ -49,7 +49,7 @@
                 height: 0
             }, opt.speed || 300, function() {
                 $(this).remove();
-                if(typeof opt.after == 'function') opt.after.call(jq);
+                if (typeof opt.after == 'function') opt.after.call(jq);
             });
         },
         /*---------------------------------------------------------------------------------------
@@ -62,11 +62,11 @@
             // 格式化参数
             jq = $(jq);
             opt = opt || {};
-            if(typeof opt == 'function') {
+            if (typeof opt == 'function') {
                 opt = {
                     after: opt
                 };
-            } else if(typeof opt == 'number') {
+            } else if (typeof opt == 'number') {
                 opt = {
                     speed: opt
                 };
@@ -92,7 +92,7 @@
                 opacity: 0.1
             }, opt.speed || 500, function() {
                 $(this).remove();
-                if(typeof opt.after == 'function') opt.after.call(jq);
+                if (typeof opt.after == 'function') opt.after.call(jq);
             });
         },
         /*---------------------------------------------------------------------------------------
@@ -111,26 +111,26 @@
             // 处理参数
             var me = $(ele);
             var opt = opt || {};
-            if(typeof opt == 'function') {
+            if (typeof opt == 'function') {
                 opt = {
                     after: opt
                 };
-            } else if(typeof opt == 'boolean') {
+            } else if (typeof opt == 'boolean') {
                 opt = {
                     multi: true
                 };
             }
-            if(typeof opt.after != 'function') opt.after = function(newval, oldval) {
-                if(newval != oldval) this.text(newval);
+            if (typeof opt.after != 'function') opt.after = function(newval, oldval) {
+                if (newval != oldval) this.text(newval);
             };
             // 定义处理函数
             var onKeydown = function(e) {
                     // Esc
-                    if(27 == e.which) {
+                    if (27 == e.which) {
                         $(this).val($(this).attr('old-val')).blur();
                     }
                     // Ctrl + Enter
-                    else if(e.which == 13 && window.keyboard.ctrl) {
+                    else if (e.which == 13 && window.keyboard.ctrl) {
                         $(this).blur();
                     }
                 };

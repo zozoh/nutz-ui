@@ -18,13 +18,13 @@
     }
     // 统一处理 Ajax 的返回
     var handleAjaxCallback = function(re, callback) {
-            if(typeof re == 'string') {
+            if (typeof re == 'string') {
                 re = eval('(' + re + ')');
             }
             // 返回的有错误
-            if(!re.ok) {
+            if (!re.ok) {
                 // 如果过期了，那么自动将窗口转向首页
-                if(re.msg == 'ajax.expired') {
+                if (re.msg == 'ajax.expired') {
                     window.top.location = '/';
                     return;
                 }
@@ -32,7 +32,7 @@
                 ajaxError(re);
             }
             // 异步的，需要调用回调
-            else if(typeof callback == 'function') {
+            else if (typeof callback == 'function') {
                 callback(re);
             }
             // 同步的
@@ -54,26 +54,26 @@
             var old = '';
             xhr.onreadystatechange = function(e) {
                 // 请求开始写入数据了
-                if(xhr.readyState >= 3) {
+                if (xhr.readyState >= 3) {
                     var str = xhr.responseText.substring(i);
                     i += str.length;
                     // 寻找最后一次结束的标记
                     var pos = str.lastIndexOf(endl);
                     // 没找到，则保存
-                    if(pos < 0) {
+                    if (pos < 0) {
                         old += str;
                     } else { // 否则保存最后的残缺片段，等下次更新
                         var s = old + str.substring(0, pos);
                         old = str.substring(pos + endl.length);
-                        if(typeof opt.change == 'function') {
+                        if (typeof opt.change == 'function') {
                             opt.change(s.split(endl), opt);
                         }
                     }
                 }
                 // 请求已经结束了
-                if(xhr.readyState == 4) {
-                    if(xhr.status == 200) {
-                        if(typeof opt.finish == 'function') {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        if (typeof opt.finish == 'function') {
                             opt.finish(opt);
                         }
                     } else {
@@ -83,21 +83,21 @@
             };
             var queryString = '';
             var body = null;
-            if(!opt.method || 'GET' == opt.method) {
-                if(opt.data) {
+            if (!opt.method || 'GET' == opt.method) {
+                if (opt.data) {
                     var ss = [];
-                    for(var key in opt.data) {
+                    for (var key in opt.data) {
                         ss.push(key + '=' + encodeURIComponent(opt.data[key]));
                     }
                     queryString = ss.join('&');
-                    if(queryString) {
+                    if (queryString) {
                         opt.url += '?' + queryString;
                     }
                 }
-            } else if('POST' == opt.method) {
-                if(opt.data) {
+            } else if ('POST' == opt.method) {
+                if (opt.data) {
                     var ss = [];
-                    for(var key in opt.data) {
+                    for (var key in opt.data) {
                         ss.push(key + '=' + encodeURIComponent(opt.data[key]));
                     }
                     body = ss.join('&');
@@ -107,7 +107,7 @@
             }
             xhr.open(opt.method ? opt.method : 'GET', opt.url, true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            if(body) {
+            if (body) {
                 xhr.send(body);
             } else {
                 xhr.send();
@@ -115,16 +115,16 @@
         },
         // 普通 AJAX GET 请求 > Text
         getText: function(url, form, callback) {
-            if(typeof form == 'function') {
+            if (typeof form == 'function') {
                 callback = form;
                 form = null;
             }
             var whenDone = function(text) {
-                    if($z.str.startsWith(text, ERR_PREFIX)) {
+                    if ($z.str.startsWith(text, ERR_PREFIX)) {
                         ajaxError(text.substring(ERR_PREFIX.length));
                         return;
                     }
-                    if(typeof callback == 'function') callback(text);
+                    if (typeof callback == 'function') callback(text);
                 };
             var ajaxOption = {
                 url: url,
@@ -148,7 +148,7 @@
                     re = text;
                 }
             });
-            if($z.str.startsWith(re, ERR_PREFIX)) {
+            if ($z.str.startsWith(re, ERR_PREFIX)) {
                 ajaxError(re.substring(ERR_PREFIX.length));
                 return '';
             }
@@ -156,7 +156,7 @@
         },
         // 普通 AJAX GET 请求 > AjaxReturn
         get: function(url, form, callback) {
-            if(typeof form == 'function') {
+            if (typeof form == 'function') {
                 callback = form;
                 form = null;
             }
@@ -169,7 +169,7 @@
         },
         // 普通同步 AJAX GET 请求 > AjaxReturn
         syncGet: function(url, form) {
-            if(typeof form == 'function') {
+            if (typeof form == 'function') {
                 callback = form;
                 form = null;
             }
@@ -189,7 +189,7 @@
         },
         // 普通 AJAX POST 请求 > AjaxReturn
         post: function(url, form, callback) {
-            if(typeof form == 'function') {
+            if (typeof form == 'function') {
                 callback = form;
                 form = null;
             }
@@ -203,7 +203,7 @@
         },
         // 普通同步 AJAX GET 请求 > AjaxReturn
         syncPost: function(url, form) {
-            if(typeof form == 'function') {
+            if (typeof form == 'function') {
                 callback = form;
                 form = null;
             }
@@ -234,28 +234,28 @@
         },
         // 普通 HTTP GET 请求 > 页面刷新
         formGet: function(url, form, target) {
-            if(typeof form == 'string') {
+            if (typeof form == 'string') {
                 target = form;
                 form = null;
             }
             var html = '<form style="display:none;" method="GET" action="' + url + '"';
-            if(target) html += '  target="' + target + '"';
+            if (target) html += '  target="' + target + '"';
             html += '></form>';
             var jForm = $(html).appendTo(document.body);
-            if(form) for(var key in form) $('<textarea name="' + key + '"></textarea>').appendTo(jForm).text(form[key]);
+            if (form) for (var key in form) $('<textarea name="' + key + '"></textarea>').appendTo(jForm).text(form[key]);
             jForm.submit();
         },
         // 普通 HTTP POST 请求 > 页面刷新
         formPost: function(url, form, target) {
-            if(typeof form == 'string') {
+            if (typeof form == 'string') {
                 target = form;
                 form = null;
             }
             var html = '<form style="display:none;" method="POST" action="' + url + '"';
-            if(target) html += '  target="' + target + '"';
+            if (target) html += '  target="' + target + '"';
             html += '></form>';
             var jForm = $(html).appendTo(document.body);
-            if(form) for(var key in form) $('<textarea name="' + key + '"></textarea>').appendTo(jForm).text(form[key]);
+            if (form) for (var key in form) $('<textarea name="' + key + '"></textarea>').appendTo(jForm).text(form[key]);
             jForm.submit();
         }
     });

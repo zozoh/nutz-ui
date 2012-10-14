@@ -12,15 +12,15 @@
         //---------------------------------------------------------------------------
         // 返回一个时间戳，其它应用可以用来阻止浏览器缓存
         timestamp: function() {
-            return((new Date()) + '').replace(/[ :\t*+()-]/g, '').toLowerCase();
+            return ((new Date()) + '').replace(/[ :\t*+()-]/g, '').toLowerCase();
         },
         //---------------------------------------------------------------------------
         winsz: function() {
-            if(window.innerWidth) return {
+            if (window.innerWidth) return {
                 width: window.innerWidth,
                 height: window.innerHeight
             };
-            if(document.documentElement) return {
+            if (document.documentElement) return {
                 width: document.documentElement.clientWidth,
                 height: document.documentElement.clientHeight
             };
@@ -33,7 +33,7 @@
         // 获得当前系统当前浏览器中滚动条的宽度
         // TODO 代码实现的太恶心，要重构!
         scrollBarWidth: function() {
-            if(!window.SCROLL_BAR_WIDTH) {
+            if (!window.SCROLL_BAR_WIDTH) {
                 var newDivOut = "<div id='div_out' style='position:relative;width:100px;height:100px;overflow-y:scroll;overflow-x:scroll'></div>";
                 var newDivIn = "<div id='div_in' style='position:absolute;width:100%;height:100%;'></div>";
                 var scrollWidth = 0;

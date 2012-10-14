@@ -18,7 +18,11 @@ st2本身不支持format，需要安装插件来支持，那么先安装Package 
 3. 重启 Sublime Text 2，如果在 Preferences -> Package Settings中见到Package Control这一项，就说明安装成功了。
 
 ### JS
-使用 JsFormat 这个插件, 默认设置即可
+使用 JsFormat 这个插件, 配置如下（添加到用户配置中即可）
+
+{
+    "space_before_line_starters": true
+}
 
 考虑使用gjslint来检查错误，并使用fixjsstyle来格式化，但目前版本fixjsstyle无法正确工作
 

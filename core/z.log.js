@@ -15,31 +15,31 @@
     //  2 - 普通    : info
     //  3 - 更多调试  : debug
     //  4 - 最详细的细节: trace
-    if(typeof window.LOG_LEVEL == 'undefined') {
+    if (typeof window.LOG_LEVEL == 'undefined') {
         window.LOG_LEVEL = 3;
     }
     $z.def('log', {
         out: function(level, msg) {
-            if(!LOG_LEVEL) return;
+            if (!LOG_LEVEL) return;
             var str = level + ': ' + $z.time.nowstr() + ': ' + msg;
             // WebKit 浏览器特殊的控制台打印方法
-            if(console && console.log) {
+            if (console && console.log) {
                 console.log(str);
             } else {
                 alert(str);
             }
         },
         w: function(msg) {
-            if(window.LOG_LEVEL >= 1) this.out('W', msg);
+            if (window.LOG_LEVEL >= 1) this.out('W', msg);
         },
         i: function(msg) {
-            if(window.LOG_LEVEL >= 2) this.out('I', msg);
+            if (window.LOG_LEVEL >= 2) this.out('I', msg);
         },
         d: function(msg) {
-            if(window.LOG_LEVEL >= 3) this.out('D', msg);
+            if (window.LOG_LEVEL >= 3) this.out('D', msg);
         },
         t: function(msg) {
-            if(window.LOG_LEVEL >= 4) this.out('T', msg);
+            if (window.LOG_LEVEL >= 4) this.out('T', msg);
         }
     });
 })(window.jQuery, window.NutzUtil);
