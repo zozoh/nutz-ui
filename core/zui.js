@@ -95,10 +95,18 @@
         },
         depose: function() {
             // 注销全部的子绑定
-            if (this.children) for (var key in this.children)
-            this.children[key].depose();
+            if (this.children) {
+                for (var key in this.children) {
+                    this.children[key].depose();
+                }
+            }
             // 注销自己
-            this.ui().on_depose.call(this);
+            this.selection.undelegate();
+            var myUI = this.ui();
+            if (!myUI.keepDom) {
+                this.selection.empty();
+            }
+            myUI.on_depose.call(this);
             // 注销父 bind 的记录
             var p = this.parent();
             if (p) delete p.children[this.ID];
