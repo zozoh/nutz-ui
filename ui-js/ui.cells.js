@@ -7,7 +7,7 @@
  */
 (function($, ui, $z) {
     // .......................................... 帮助函数
-    // 分配尺寸，自动计算 "*"
+    // 分配尺寸，自动计算 '*'
 
     function _assign_size(sum, list) {
         var array = [];
@@ -18,7 +18,7 @@
         var asnum = 0;
         var remain = sum;
         for (var i = 0; i < array.length; i++) {
-            if (array[i] == "*") {
+            if (array[i] == '*') {
                 asnum++;
             } else {
                 remain -= array[i];
@@ -30,7 +30,7 @@
             var total = 0;
             var lastIndex = -1;
             for (var i = 0; i < array.length; i++) {
-                if (array[i] == "*") {
+                if (array[i] == '*') {
                     array[i] = avg;
                     lastIndex = i;
                 }
@@ -46,8 +46,18 @@
     // .......................................... 开始定义控件
     ui('cells', {
         dft_option: {
-            'cols': ["*", "*", 200],
-            'rows': [30, "*"]
+            'cols': ['*', '*', 200],
+            'rows': [30, '*']
+        },
+        gasket: function(nm) {
+            var jRows = this.selection.children('.cells').children('.cells-row');
+            for (var i = 0; i < jRows.size(); i++) {
+                var jCell = $(jRows[i]).children('.cell-id-' + nm);
+                if (jCell.size() > 0) {
+                    return jCell;
+                }
+            }
+            return null;
         },
         on_init: function() {
             var html = '<div class="cells">';
@@ -70,21 +80,19 @@
                 'position': 'absolute'
             });
         },
-        on_resize: function() {
-            var sumW = this.selection.innerWidth();
-            var sumH = this.selection.innerHeight();
+        on_resize: function(sumW, sumH) {
             // 分配宽高
             var cols = _assign_size(sumW, this.option.cols);
             var rows = _assign_size(sumH, this.option.rows);
             // 开始设置
             var top = 0;
-            var jq = this.selection.children(".cells");
+            var jq = this.selection.children('.cells');
             for (var i = 0; i < rows.length; i++) {
                 var H = rows[i];
                 var left = 0;
-                var jRow = $(jq.children(".cells-row")[i]);
+                var jRow = $(jq.children('.cells-row')[i]);
                 for (var j = 0; j < cols.length; j++) {
-                    var jCell = $(jRow.children(".cells-cell")[j]);
+                    var jCell = $(jRow.children('.cells-cell')[j]);
                     var W = cols[j];
                     // 设置 CSS
                     jCell.css({
