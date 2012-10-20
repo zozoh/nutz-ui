@@ -26,7 +26,7 @@
         //---------------------------------------------------------------------------------------
         // 编码 URL
         encode: function(str) {
-            return escape(result);
+            return escape(str);
         }
     });
 })(window.jQuery, window.NutzUtil);

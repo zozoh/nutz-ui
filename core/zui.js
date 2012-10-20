@@ -231,7 +231,9 @@
         if (typeof uiTypeName == 'string' && typeof uiDef == 'object') {
             // 看看是否是继承
             var puiDef = {};
-            if (uiDef.extend) puiDef = NutzUI(uiDef.extend);
+            if (uiDef.extend) {
+                puiDef = NutzUI(uiDef.extend);
+            }
             // 开始定义 ...
             NutzUI.types[uiTypeName] = $.extend(true, {
                 on_init: function() {},
@@ -258,7 +260,9 @@
         }
         // 获取一个 uiDef 对象
         var uiType = NutzUI.types[uiTypeName];
-        if (!uiType) throw "Undefined NutzUI Type '" + uiTypeName + "'!";
+        if (!uiType) {
+            throw "Undefined NutzUI Type '" + uiTypeName + "'!";
+        }
         return uiType;
     }; // 结束 UI 框架的初始化
     // 确保自己内部的数据结构
@@ -272,6 +276,7 @@
      * 扩展 $z.ui 的名称空间，增加一些帮助函数
      */
     var REGEX_UI_SELECTOR = /^(@)([a-zA-Z0-9._-]+)(:)([a-zA-Z0-9._-]+)$/;
+
     $z.def('ui', {
         /*----------------------------------------------------------------------
          * 从一个选择器中获取 jQuery 对象，选择器可以说标准 CSS 选择器，或者 "@bind.ID:名称"
@@ -292,7 +297,9 @@
          */
         selection: function(selector) {
             var jq = $(selector);
-            if (jq.attr(NutzUI.BIND)) return jq;
+            if (jq.attr(NutzUI.BIND)) {
+                return jq;
+            }
             return jq.parents('[' + NutzUI.BIND + ']').first();
         },
         /*----------------------------------------------------------------------
@@ -363,7 +370,9 @@
          */
         uname: function(str) {
             var m = /^([#~]*)(:)([a-zA-Z0-9_-]*)(:)([a-zA-Z0-9_.-]+)$/.exec($.trim(str));
-            if (!m) throw "Uknown uname '" + str + "'!!!";
+            if (!m) {
+                throw "Uknown uname '" + str + "'!!!";
+            }
             return {
                 pin: m[1].indexOf('#') >= 0,
                 // 是否是要固定显示的字符串
@@ -384,7 +393,9 @@
          * @return 如果没找到 LI 对象，则返回 defval ? key，否则返回 LI 的文本内容
          */
         msg: function(key, defval) {
-            if (!key) return '';
+            if (!key) {
+                return '';
+            }
             var li = $('#__msg__ .' + key.replace(/[.]/g, '_'));
             return li.size() > 0 ? $(li[0]).html() : (defval ? defval : key);
         },
@@ -417,6 +428,8 @@
 
     // 最后分析一下锚值对象
     var AO = $z.ui.ao();
-    if (!AO.force) AO = $.extend(true, window.NUTZ_PAGE_AO || {}, AO);
+    if (!AO.force) {
+        AO = $.extend(true, window.NUTZ_PAGE_AO || {}, AO);
+    }
 
 })(window.jQuery, window.NutzUtil);

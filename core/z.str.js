@@ -11,43 +11,69 @@
     $z.def('str', {
         dup: function(s, num) {
             var re = '';
-            for (var i = 0; i < num; i++)
-            re = re + s;
+            for (var i = 0; i < num; i++) {
+                re = re + s;
+            }
             return re;
         },
         //---------------------------------------------------------------------------------------
         contains: function(array, o) {
-            if (!$.isArray(array) || !o) return false;
-            for (var i = 0; i < array.length; i++)
-            if (array[i] == o) return true;
+            if (!$.isArray(array) || !o) {
+                return false;
+            }
+            for (var i = 0, j = array.length; i < j; i++) {
+                if (array[i] == o) {
+                    return true;
+                }
+            }
             return false;
         },
         //---------------------------------------------------------------------------------------
         // 让字符串居左对齐
         alignl: function(s, width, by) {
-            if (typeof s != 'string') s = '' + s;
-            if (!by) by = ' ';
-            if (s.length < width) return s + z.dup(by, width - s.length);
+            if (typeof s != 'string') {
+                s = '' + s;
+            }
+            if (!by) {
+                by = ' ';
+            }
+            if (s.length < width) {
+                return s + z.dup(by, width - s.length);
+            }
             return s;
         },
         //---------------------------------------------------------------------------------------
         // 让字符串居右对齐
         alignr: function(s, width, by) {
-            if (typeof s != 'string') s = '' + s;
-            if (!by) by = ' ';
-            if (s.length < width) return this.dup(by, width - s.length) + s;
+            if (typeof s != 'string') {
+                s = '' + s;
+            }
+            if (!by) {
+                by = ' ';
+            }
+            if (s.length < width) {
+                return this.dup(by, width - s.length) + s;
+            }
             return s;
         },
         //---------------------------------------------------------------------------------------
         startsWith: function(str, sub) {
-            if (!str || !sub) return false;
-            if (str.length < sub.length) return false;
+            if (!str || !sub) {
+                return false;
+            }
+            if (str.length < sub.length) {
+                return false;
+            }
             return str.substring(0, sub.length) == sub;
         },
         //---------------------------------------------------------------------------------------
         endsWith: function(str, sub) {
-            if (!str || !sub) return false;
-            if (str.length < sub.length) return false;
+            if (!str || !sub) {
+                return false;
+            }
+            if (str.length < sub.length) {
+                return false;
+            }
             return str.substring(str.length - sub.length, str.length) == sub;
         },
         //---------------------------------------------------------------------------------------
@@ -57,7 +83,9 @@
          * @return 紧凑的字符串.
          */
         brief: function(str, len) {
-            if (!str || (str.length + 3) <= len) return str;
+            if (!str || (str.length + 3) <= len) {
+                return str;
+            }
             var w = parseInt(len / 2);
             var l = str.length;
             return str.substring(0, len - w) + ' ... ' + str.substring(l - w);

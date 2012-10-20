@@ -40,16 +40,22 @@
                 'height': h
             }).insertAfter(jq);
             // 删除元素
-            if (opt.appendTo) jq.appendTo(opt.appendTo);
-            else if (opt.prependTo) jq.prependTo(opt.prependTo);
-            else jq.remove();
+            if (opt.appendTo) {
+                jq.appendTo(opt.appendTo);
+            } else if (opt.prependTo) {
+                jq.prependTo(opt.prependTo);
+            } else {
+                jq.remove();
+            }
             // 显示动画
             holder.animate({
                 width: 0,
                 height: 0
             }, opt.speed || 300, function() {
                 $(this).remove();
-                if (typeof opt.after == 'function') opt.after.call(jq);
+                if (typeof opt.after == 'function') {
+                    opt.after.call(jq);
+                }
             });
         },
         /*---------------------------------------------------------------------------------------
@@ -92,7 +98,9 @@
                 opacity: 0.1
             }, opt.speed || 500, function() {
                 $(this).remove();
-                if (typeof opt.after == 'function') opt.after.call(jq);
+                if (typeof opt.after == 'function') {
+                    opt.after.call(jq);
+                }
             });
         },
         /*---------------------------------------------------------------------------------------

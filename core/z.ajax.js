@@ -12,34 +12,34 @@
 
     // 显示错误
     // TODO 这里暂时先 alert 吧 ^_^! ...
-
     function ajaxError(e) {
         alert('Ajax Error!\n' + $z.obj.dump(e));
     }
+
     // 统一处理 Ajax 的返回
-    var handleAjaxCallback = function(re, callback) {
-            if (typeof re == 'string') {
-                re = eval('(' + re + ')');
+    function handleAjaxCallback(re, callback) {
+        if (typeof re == 'string') {
+            re = eval('(' + re + ')');
+        }
+        // 返回的有错误
+        if (!re.ok) {
+            // 如果过期了，那么自动将窗口转向首页
+            if (re.msg == 'ajax.expired') {
+                window.top.location = '/';
+                return;
             }
-            // 返回的有错误
-            if (!re.ok) {
-                // 如果过期了，那么自动将窗口转向首页
-                if (re.msg == 'ajax.expired') {
-                    window.top.location = '/';
-                    return;
-                }
-                // 显示错误
-                ajaxError(re);
-            }
-            // 异步的，需要调用回调
-            else if (typeof callback == 'function') {
-                callback(re);
-            }
-            // 同步的
-            else {
-                return re;
-            }
-        };
+            // 显示错误
+            ajaxError(re);
+        }
+        // 异步的，需要调用回调
+        else if (typeof callback == 'function') {
+            callback(re);
+        }
+        // 同步的
+        else {
+            return re;
+        }
+    };
     // 开始定义帮助函数集
     $z.def('ajax', {
         handle: function(re, callback) {

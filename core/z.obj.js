@@ -16,9 +16,15 @@
         // index == -2 表示倒数第二个
         // 如果 index 越界，返回 null
         get: function(array, index) {
-            if (typeof index != 'number') return null;
-            if (index < 0) index = array.size() + index;
-            if (index < 0 || (index + 1) > array.size()) return null;
+            if (typeof index != 'number') {
+                return null;
+            }
+            if (index < 0) {
+                index = array.size() + index;
+            }
+            if (index < 0 || (index + 1) > array.size()) {
+                return null;
+            }
             return array[index];
         },
         // 深层获取对象的某个字段的值
@@ -26,11 +32,15 @@
         // fldpath 字段路径，比如 "x.y.z"
         // dft 如果没有值，默认返回啥
         val: function(obj, fldPath, dft) {
-            if (!obj) return dft;
+            if (!obj) {
+                return dft;
+            }
             var flds = fldPath.split('.');
             for (var i = 0; i < flds.length; i++) {
                 obj = obj[flds[i]];
-                if (!obj) return '';
+                if (!obj) {
+                    return '';
+                }
             }
             return obj ? obj : dft;
         },
