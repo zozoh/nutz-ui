@@ -23,7 +23,11 @@
         },
         // 获取本 bind 内部的扩展点的 jq 对象
         gasket: function(name) {
-            return this.ui().gasket.call(this, name);
+            var g = this.ui().gasket.call(this, name);
+            if (!g || g.size() == 0) {
+                throw 'Unknow gasks[' + name + '] for "' + this.ID + '"';
+            }
+            return g;
         },
         // 获取本 bind 的父 bind，如果为根 bind，则返回 null
         parent: function() {
