@@ -120,7 +120,8 @@ ui("avatas", {
 			// 然后得到 form 并执行上传
 			var jq = $(this).parents(".avatas-form");
 			var szs = [jq.attr("avata-sz")];
-			if(jq.find(":checkbox")[0].checked){
+            var jCheck = jq.find(":checkbox");
+			if(jCheck.size()>0 && jCheck[0].checked){
 				jq.nextAll().each(function(){
 					szs.push($(this).attr("avata-sz"));
 				});
