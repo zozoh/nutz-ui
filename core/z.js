@@ -15,7 +15,7 @@
          */
         def: function(nms, obj) {
             // 确定所有的包都存在
-            var nms = nms.split('[.]');
+            var nms = nms.split(/[.]/);
             var nm = nms[nms.length - 1]; // 最后一个包名
             var pkg = this; // 当前对象就是根包
             for (var i = 0; i < nms.length - 1; i++) {
