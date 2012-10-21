@@ -21,6 +21,31 @@
         ui: function() {
             return NutzUI.types[this.typeName];
         },
+        // 根据一个路径来获取相对自己的 bind
+        //  - 绝对路径 "/arena/g0_1"
+        //  - 相对路径 "../g0_1"  
+        //  - 相对自己的子 "./child_gasket/abc" 或 "child_gasket/abc"
+        getBindByPath: function(path) {
+            var nms = path.split(/\//);
+            var bind;
+            for (var i = 0; i < nms.length; i++) {
+                switch (nms[i]) {
+                case '':
+                    bind = $z.ui.getBind();
+                    break;
+                case '':
+                    bind = bind || this;
+                    break;
+                case '..':
+                    bind = (bind || this).parent();
+                    break;
+                default:
+                    bind = (bind || this).children[nms[i]];
+                }
+                if (!bind) throw 'Invalid bind from "' + this.ID + '" > "' + path + '"';
+            }
+            return bind;
+        },
         // 获取本 bind 内部的扩展点的 jq 对象
         gasket: function(name) {
             var g = this.ui().gasket.call(this, name);
