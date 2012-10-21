@@ -306,9 +306,10 @@
         },
         /*----------------------------------------------------------------------
          * 从任何一个 DOM 或者 jq 对象中获取该对象所属的选区 jq 对象
+         *  - selector 某个 DOM 对象，如果为 null 则默认为 document.body
          */
         selection: function(selector) {
-            var jq = $(selector);
+            var jq = $(selector || document.body);
             if (jq.attr(NutzUI.BIND)) {
                 return jq;
             }
@@ -316,8 +317,23 @@
         },
         /*----------------------------------------------------------------------
          * 从任何一个 DOM 或者 jq 对象中获取该对象所属的绑定对象
+         *  - selector 某个 DOM 对象，如果为 null 则默认为 document.body，则返回根 bind
+         *    如果 selector 以 "/" 开头，则表示一个绑定路径，比如 "/arena/g0_1" 则返回对应的 bind
          */
         getBind: function(selector) {
+            // 从路径获取
+            if (typeof selector == 'string' && $z.str.startsWith(selector, '/')) {
+                var nms = selector.substring(1).split(/[\/.]/);
+                var bind = NutzUtil.ui.getBind();
+                for (var i = 0; i < nms.length; i++) {
+                    if (!bind) {
+                        throw 'Invalid bind path "' + selector + '"!';
+                    }
+                    bind = bind.children[nms[i]];
+                }
+                return bind;
+            }
+            // DOM 获取
             var bindID = this.selection(selector).attr(NutzUI.BIND);
             return NutzUI('@' + bindID);
         },
