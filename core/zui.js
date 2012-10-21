@@ -460,6 +460,15 @@
             return ($(document.body).attr('nutz-url-prefix') || '') + url;
         },
         /*----------------------------------------------------------------------
+         * 向用户询问某些信息
+         * @param msg : 提示信息
+         * @param callback : function(obj){...}     # 回调函数传入信息对象
+         * @return 信息内容
+         */
+        ask : function(msg, callback) {
+            callback(window.prompt(msg));
+        },
+        /*----------------------------------------------------------------------
          * 界面显示给用户一个警告信息
          */
         warn: function(msg) {
