@@ -93,6 +93,8 @@
         if ('close' == opt) {
             do_close(getHelper());
             return;
+        } else if ('helper' == opt) {
+            return getHelper();
         }
         // 修正 option
         opt = $.extend(true, {
@@ -106,7 +108,8 @@
             on_show: function() {},
             on_close: function() {},
             on_resize: function() {},
-            btns: {}
+            btns: {},
+            evetns: {}
         }, opt);
         // 初始化 DOM 对象
         var html = '<div class="masker ' + (opt.className || "") + '">';
@@ -170,6 +173,16 @@
                 func.call(this, e, helper);
             }
         });
+        // 绑定用户自定义事件
+        for (var key in opt.events) {
+            var func = opt.events[key];
+            if (typeof func == 'function') {
+                var m = /^(([a-z]+)(:))?(.*)$/.exec(key);
+                var eventType = $.trim(m[2] ? m[2] : 'click');
+                var selector = $.trim(m[4]);
+                helper.masker.delegate(selector, eventType, func);
+            }
+        }
 
         // 调用显示事件
         opt.on_show.call(helper);

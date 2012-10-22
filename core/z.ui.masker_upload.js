@@ -7,6 +7,7 @@
  *     url: '...',                  # 目标 URL
  *     headers: {...},              # 请求头自定义字段
  *     done: function(objs) {...}   # 完成后的回调，传入一个对象数组表示返回
+ *                                   ?? TODO zozoh: objs 还未实现
  * }
  * 本文件依赖:
  *   > z.js
@@ -19,8 +20,56 @@
  */
 (function($, $z) {
     function appendFileToList(file, jList) {
-
+        var html = '<ul class="masker-upload-fi masker-upload-fi-new cfloat">';
+        html += '<li class="masker-upload-fi-type">' + file.type + '</li>';
+        html += '<li class="masker-upload-fi-size">' + $z.str.sizeText(file.size) + '</li>';
+        html += '<li class="masker-upload-fi-name">' + file.name + '</li>';
+        html += '<li class="masker-upload-fi-process">';
+        html += '    <div class="masker-upload-bar"><div class="masker-upload-bar-inner">0%</div></div>';
+        html += '</li>';
+        html += '</ul>'
+        $(html).appendTo(jList).last().data('upload-file', file)[0].scrollIntoView(false);
     }
+
+    function do_upload(helper, jq) {
+        // 滚动
+        jq[0].scrollIntoView(false);
+        $z.be.blinkIt(jq);
+        // 显示当前行
+        jq.prevAll().removeClass('masker-upload-fi-ing');
+        jq.removeClass('masker-upload-fi-new').addClass('masker-upload-fi-ing');
+        // 准备调用
+        $z.ajax.upload({
+            file: jq.data('upload-file'),
+            url: helper.option.url,
+            headers: $.extend(true, {}, helper.option.headers),
+            on_ok: function() {
+                jq.removeClass('masker-upload-fi-ing').addClass('masker-upload-fi-done');
+                // 如果全部完成
+                if (helper.body.find('.masker-upload-fi-done').size() == helper.body.find('.masker-upload-fi')) {
+                    if (helper.option.closeWhenAllDone) {
+                        $z.ui.masker('close');
+                    }
+                }
+                // 如果还是有新的
+                else if(helper.find('.masker-upload-fi-new').size()>0){
+                    do_upload(helper, helper.find('.masker-upload-fi-new').first());
+                }
+            },
+            on_process: function(e){
+                var inner = jq.find('.masker-upload-bar-inner');
+                var p = parseInt(10000 * e.loaded/e.total) / 100;
+                var w = inner.parent().width() * p / 100;
+                inner.css('width', w).text( p + '%');
+            },
+            on_error : function(){
+                jq.removeClass('masker-upload-fi-ing').addClass('masker-upload-fi-err');
+                var inner = jq.find('.masker-upload-bar-inner');
+                inner.css('width', 0).text('0%');
+            }
+        });
+    }
+
     $z.def('ui.masker_upload', function(opt) {
         // 计算宽高
         var sz = $z.sys.winsz();
@@ -33,14 +82,50 @@
 
         // 事件   
         maskerOpt.events = {
-
+            '.masker-upload-submit': function() {
+                var helper = $z.ui.masker('helper');
+                var jq = helper.body.find('.masker-upload-fi-new').first();
+                if (jq.size() == 0) {
+                    $z.ui.warn($z.ui.msg('masker.upload.nofile'));
+                    return;
+                }
+                do_upload(helper, jq);
+            },
+            'change:.masker-upload-file': function() {
+                var jList = $z.ui.masker('helper').body.find('.masker-upload-list');
+                for (var i = 0; i < this.files.length; i++) {
+                    appendFileToList(this.files[i], jList);
+                }
+            },
+            'dragover:.masker-upload-list': function() {
+                $(this).addClass("masker-upload-list-dragover");
+            },
+            'dragleave:.masker-upload-list': function() {
+                $(this).removeClass("masker-upload-list-dragover");
+            },
+            'drop:.masker-upload-list': function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                $(this).removeClass("masker-upload-list-dragover");
+                var jList = $z.ui.masker('helper').body.find('.masker-upload-list');
+                if (e.originalEvent.dataTransfer) {
+                    var files = e.originalEvent.dataTransfer.files;
+                    for (var i = 0; i < files.length; i++) {
+                        appendFileToList(files[i], jList);
+                    }
+                }
+            },
+            'drop:*': function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
         };
 
         // 显示方法
         maskerOpt.on_show = function() {
             var html = '<div class="masker-upload">';
             html += '<div class="masker-upload-picker">';
-            html += '    <input type="file" class="masker-upload-file">';
+            html += '    <input type="file" class="masker-upload-file" multiple="">';
             html += '    <b class="btn masker-upload-submit">' + $z.ui.msg('masker.upload.submit') + '</b>';
             html += '    <b class="btn masker-upload-submit">' + $z.ui.msg('masker.upload.cancel') + '</b>';
             html += '</div>';
