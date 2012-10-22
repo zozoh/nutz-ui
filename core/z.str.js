@@ -9,6 +9,21 @@
  */
 (function($, $z) {
     $z.def('str', {
+        /**
+         * 判断一个字符串是否是空串
+         */
+        isBlank: function(str) {
+            if (str == undefined) {
+                return true;
+            }
+            if ($.trim(str).length == 0) {
+                return true;
+            }
+            if (/^\s*$/.test(str)) {
+                return true;
+            }
+            return false;
+        },
         dup: function(s, num) {
             var re = '';
             for (var i = 0; i < num; i++) {
@@ -82,31 +97,25 @@
          * unit 如果为 'M' 表示单位为M， 如果为 'K' 表示单位为 K
          */
         sizeText: function(size, unit) {
-            if( typeof size != "number")
-                size = size * 1;
-            if("M" == unit) {
+            if (typeof size != "number") size = size * 1;
+            if ("M" == unit) {
                 var g = size / 1000;
-                if(g > 1)
-                    return Math.ceil(g * 10) / 10 + " GB";
+                if (g > 1) return Math.ceil(g * 10) / 10 + " GB";
                 return size + "MB";
             }
-            if("K" == unit) {
+            if ("K" == unit) {
                 var m = size / 1000;
                 var g = m / 1000;
-                if(g > 1)
-                    return Math.ceil(g * 10) / 10 + " GB";
-                if(m > 1)
-                    return Math.ceil(m * 10) / 10 + " MB";
+                if (g > 1) return Math.ceil(g * 10) / 10 + " GB";
+                if (m > 1) return Math.ceil(m * 10) / 10 + " MB";
                 return Math.ceil(k) + " KB";
             }
             var k = size / 1000;
-            if(k > 1) {
+            if (k > 1) {
                 var m = k / 1000;
                 var g = m / 1000;
-                if(g > 1)
-                    return Math.ceil(g * 10) / 10 + " GB";
-                if(m > 1)
-                    return Math.ceil(m * 10) / 10 + " MB";
+                if (g > 1) return Math.ceil(g * 10) / 10 + " GB";
+                if (m > 1) return Math.ceil(m * 10) / 10 + " MB";
                 return Math.ceil(k) + " KB";
             }
             return size + " B";
