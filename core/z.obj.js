@@ -35,7 +35,7 @@
             if (!obj) {
                 return dft;
             }
-            var flds = fldPath.split('.');
+            var flds = fldPath.split(/[\/.]/);
             for (var i = 0; i < flds.length; i++) {
                 obj = obj[flds[i]];
                 if (!obj) {

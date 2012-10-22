@@ -476,7 +476,10 @@
          * @return 信息内容
          */
         ask: function(msg, callback) {
-            callback(window.prompt(msg));
+            var str = window.prompt(msg);
+            if (str) {
+                callback(str);
+            }
         },
         /*----------------------------------------------------------------------
          * 界面显示给用户一个警告信息

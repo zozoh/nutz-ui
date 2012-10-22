@@ -128,9 +128,13 @@
                     multi: true
                 };
             }
-            if (typeof opt.after != 'function') opt.after = function(newval, oldval) {
-                if (newval != oldval) this.text(newval);
-            };
+            if (typeof opt.after != 'function') {
+                opt.after = function(newval, oldval) {
+                    if (newval != oldval) {
+                        this.text(newval);
+                    }
+                };
+            }
             // 定义处理函数
             var onKeydown = function(e) {
                     // Esc

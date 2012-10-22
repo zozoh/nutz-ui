@@ -17,7 +17,7 @@
     }
 
     // 统一处理 Ajax 的返回
-    function handleAjaxCallback(re, callback) {
+    function handleAjaxCallback(re, callback, on_error) {
         if (typeof re == 'string') {
             re = eval('(' + re + ')');
         }
@@ -29,7 +29,7 @@
                 return;
             }
             // 显示错误
-            ajaxError(re);
+            (on_error || ajaxError)(re);
         }
         // 异步的，需要调用回调
         else if (typeof callback == 'function') {
@@ -222,14 +222,14 @@
             return re;
         },
         // JSON 请求 > AjaxReturn
-        json: function(url, obj, callback) {
+        json: function(url, obj, callback, on_json_error) {
             $.ajax({
                 type: 'POST',
                 url: url,
                 contentType: 'application/jsonrequest',
-                data: $z.json(obj)
+                data: $z.json.toJson(obj)
             }).done(function(re) {
-                handleAjaxCallback(re, callback);
+                handleAjaxCallback(re, callback, on_json_error);
             }).fail(ajaxError);
         },
         // 普通 HTTP GET 请求 > 页面刷新
