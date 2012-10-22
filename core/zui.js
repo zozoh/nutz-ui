@@ -155,6 +155,7 @@
         // 创建一个绑定对象
         bind: function(bind, gasketName, option) {
             var selector;
+            var selection;
             // 如果参数格式为 (selector, opt)
             if (typeof bind == 'string') {
                 var m = REGEX_UI_SELECTOR.exec(bind);
@@ -175,14 +176,23 @@
             else if ($z.ui.isBind(bind) && typeof gasketName == 'string') {
                 selector = '@' + bind.ID + ':' + gasketName;
             }
+            // 如果是jq对象或dom对象
+            else if ($(bind).size() > 0) {
+                selector = bind;
+                opt = gasketName;
+                gasketName = null;
+                selection = $(bind);
+            }
             // 否则不可接受
             else {
                 throw 'Wrong arguments when NutzUI.bind(' + bind + ',' + gasketName + ',' + option + ')';
             }
 
             // 得到选区对象
-            var selection = $z.ui.jq(selector);
-            if (selection.size() == 0) throw "Empty selection for '" + selector + "'!";
+            selection = selection || $z.ui.jq(selector);
+            if (selection.size() == 0) {
+                throw "Empty selection for '" + selector + "'!";
+            }
             // 得到绑定对象
             var theBind;
             var bindID = selection.attr(NutzUI.BIND);
@@ -465,7 +475,7 @@
          * @param callback : function(obj){...}     # 回调函数传入信息对象
          * @return 信息内容
          */
-        ask : function(msg, callback) {
+        ask: function(msg, callback) {
             callback(window.prompt(msg));
         },
         /*----------------------------------------------------------------------
