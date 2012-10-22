@@ -77,7 +77,7 @@
         };
     // ......................................... 关闭
     var do_close = function(helper) {
-            if (false != helper.option.on_close()) {
+            if (false != helper.option.on_close.call(helper)) {
                 helper.masker.undelegate().remove();
                 // 取消 '__masker_ele'
                 if ($('.masker').size() == 0) {
@@ -108,6 +108,7 @@
             on_show: function() {},
             on_close: function() {},
             on_resize: function() {},
+            on_ready: function() {},
             btns: {},
             evetns: {}
         }, opt);
@@ -197,5 +198,7 @@
             $(document.body).children().not('.masker').addClass("__masker_ele");
         }
 
+        // 准备完毕
+        opt.on_ready.call(helper);
     });
 })(window.jQuery, window.NutzUtil);
