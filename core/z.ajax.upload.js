@@ -7,9 +7,10 @@
  *    url  : 接受上传的地址
  *    headers    : {...},          # 表示要增加的 header
  *    on_process : function(e){},  # 进度变化对象 e.loaded | e.total
- *    on_ok      : function(){},   # 上传成功
- *    on_error   : function(){}   # 上传失败
+ *    on_ok      : function(re){}, # 上传成功, this 为 xhr 对象
+ *    on_error   : function(re){}  # 上传失败, this 为 xhr 对象
  * }
+ * 服务器返回 AjaxReturn 对象
  *
  * 本文件依赖:
  *   > z.js
@@ -40,12 +41,17 @@
         xhr.onreadystatechange = function(e) {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
-                    opt.on_ok();
+                    var re = $z.json.fromJson(xhr.responseText);
+                    if (re.ok) {
+                        opt.on_ok.call(xhr, re);
+                    } else {
+                        opt.on_error.call(xhr, re);
+                    }
+                    return;
                 }
-                // NND，上传出错啦 ~~~
-                else {
-                    opt.on_error();
-                }
+                opt.on_error.call(xhr, {
+                    ok: false
+                });
             }
         };
 
@@ -58,7 +64,7 @@
         // 加入更多的头信息
         if (opt.headers) {
             for (var key in opt.headers) {
-                xhr.setRequestHeader("xhr_" + key, "" + encodeURI(opt.headers[key]));
+                xhr.setRequestHeader(key, "" + encodeURI(opt.headers[key]));
             }
         }
 

@@ -43,7 +43,7 @@
             file: jq.data('upload-file'),
             url: helper.option.url,
             headers: $.extend(true, {}, helper.option.headers),
-            on_ok: function() {
+            on_ok: function(re) {
                 jq.removeClass('masker-upload-fi-ing').addClass('masker-upload-fi-done');
                 // 如果全部完成
                 if (helper.body.find('.masker-upload-fi-done').size() == helper.body.find('.masker-upload-fi')) {
@@ -52,20 +52,21 @@
                     }
                 }
                 // 如果还是有新的
-                else if(helper.find('.masker-upload-fi-new').size()>0){
-                    do_upload(helper, helper.find('.masker-upload-fi-new').first());
+                else if (helper.body.find('.masker-upload-fi-new').size() > 0) {
+                    do_upload(helper, helper.body.find('.masker-upload-fi-new').first());
                 }
             },
-            on_process: function(e){
+            on_process: function(e) {
                 var inner = jq.find('.masker-upload-bar-inner');
-                var p = parseInt(10000 * e.loaded/e.total) / 100;
+                var p = parseInt(10000 * e.loaded / e.total) / 100;
                 var w = inner.parent().width() * p / 100;
-                inner.css('width', w).text( p + '%');
+                inner.css('width', w).text(p + '%');
             },
-            on_error : function(){
+            on_error: function(re) {
                 jq.removeClass('masker-upload-fi-ing').addClass('masker-upload-fi-err');
                 var inner = jq.find('.masker-upload-bar-inner');
                 inner.css('width', 0).text('0%');
+                $('<div class="masker-upload-fi-errtip"></div>').appendTo(jq).text(re.msg);
             }
         });
     }
@@ -75,9 +76,13 @@
         var sz = $z.sys.winsz();
         var maskerOpt = {
             title: opt.title,
-            closeable: false,
+            closeable: true,
             width: 500,
-            height: '*'
+            height: '*',
+            url: opt.url,
+            headers: opt.headers || {},
+            done: opt.done ||
+            function() {}
         };
 
         // 事件   

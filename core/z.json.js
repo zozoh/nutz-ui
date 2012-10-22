@@ -13,6 +13,7 @@
             return JSON.stringify(obj, filter, tab);
         },
         fromJson: function(jsonStr, fltFunc) {
+            if (!jsonStr) return null;
             return JSON.parse(jsonStr, fltFunc);
         }
     });
