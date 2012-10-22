@@ -71,50 +71,7 @@
         //------------------------------------------------------------------
         // 将一个 JS 对象变成可以阅读的字符串
         dump: function(obj, tab) {
-            if (!tab) tab = '';
-            var re = '';
-            if (null == obj) {
-                return 'null';
-            }
-            // 函数
-            else if (typeof obj == 'function') {}
-            // jQuery 对象
-            else if (this.isJQuery(obj)) {}
-            // DOM 对象
-            else if (this.isDOM(obj)) {}
-            // 数组
-            else if ($.isArray(obj)) {
-                re += '[';
-                if (obj.length > 0) {
-                    re += tab + this.dump(obj[0], tab + '   ');
-                    for (var i = 1; i < obj.length; i++) {
-                        re += tab + ', ' + this.dump(obj[i], tab + ' ');
-                    }
-                }
-                re += ']';
-                return re;
-            }
-            // 字符串
-            else if (typeof obj == 'string') {
-                return '"' + obj.toString() + '"';
-            }
-            // 普通 JS 对象
-            else if (typeof obj == 'object') {
-                re += '{\n';
-                for (var key in obj) {
-                    var v = obj[key];
-                    if (typeof v == 'function') {
-                        re += tab + '"' + key + '" : function(){...}\n';
-                        continue;
-                    }
-                    re += tab + key + ':';
-                    if ($.isArray(v)) re += this.dump(v, tab + ' ');
-                    else re += this.dump(v, tab + ' ');
-                    re += '\n';
-                }
-                return re + tab + '}';
-            }
-            return obj.toString();
+            return JSON.stringify(obj, null, '    ');
         },
         // 判断一个对象是不是 DOM
         isDOM: function(obj) {

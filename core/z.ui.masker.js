@@ -73,7 +73,7 @@
                 'padding-bottom': paddings[2],
                 'padding-left': paddings[3],
             });
-            helper.option.on_resize.call(helper, helper.body.innerWidth(), helper.body.innerHeight());
+            helper.option.on_resize.call(helper, helper.body.width(), helper.body.height());
         };
     // ......................................... 关闭
     var do_close = function(helper) {
@@ -171,6 +171,9 @@
             }
         });
 
+        // 调用显示事件
+        opt.on_show.call(helper);
+
         // 调整尺寸
         do_resize(helper);
         if (!$(document.body).attr(BIND_ATTR_NM)) {
@@ -180,7 +183,6 @@
             }
             $(document.body).children().not('.masker').addClass("__masker_ele");
         }
-        // 调用显示事件
-        opt.on_show.call(helper);
+
     });
 })(window.jQuery, window.NutzUtil);

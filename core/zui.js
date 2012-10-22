@@ -33,7 +33,7 @@
                 case '':
                     bind = $z.ui.getBind();
                     break;
-                case '':
+                case '.':
                     bind = bind || this;
                     break;
                 case '..':
