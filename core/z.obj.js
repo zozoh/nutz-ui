@@ -44,6 +44,30 @@
             }
             return obj ? obj : dft;
         },
+        // 深层设置对象的某个字段的值
+        // obj 对象
+        // fldpath 字段路径，比如 "x.y.z"，如果没有对象，将创建
+        // val 值，undefined 表示删除
+        set: function(obj, fldPath, val) {
+            if (!obj) {
+                return dft;
+            }
+            var flds = fldPath.split(/[\/.]/);
+            var i = 0;
+            for (; i < flds.length - 1; i++) {
+                var o = obj[flds[i]];
+                if (!o) {
+                    o = {};
+                    obj[flds[i]] = o;
+                }
+                obj = o;
+            }
+            if (typeof val == 'undefined') {
+                delete obj[flds[i]];
+            } else {
+                obj[flds[i]] = val;
+            }
+        },
         //------------------------------------------------------------------
         // 将一个 JS 对象或者数组进行浅层克隆
         clone: function(obj) {

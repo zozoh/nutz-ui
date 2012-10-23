@@ -164,6 +164,8 @@
                 'width': opt.width || me.outerWidth(),
                 'height': opt.height || me.outerHeight(),
                 'position': 'absolute',
+                'top' : 0,
+                'left':0,
                 'font-family': 'Courier',
                 'z-index': 999999
             };
