@@ -2,15 +2,54 @@
     padding: 4px 10px;
 }
 
+.fieldsform-fld:hover {
+    background-color:#FFF;
+}
+
+.fieldsform-fld-nm {
+    text-align: right;
+    color:#444;
+    pading: 4px;
+    border-radius: 2px 0 0 2px;
+}
+
+.fieldsform-fld-val {
+    padding:4px;
+}
+
+.fieldsform-fld-val-wrapper {
+    position: relative;
+    border-radius: 0 2px 2px 0;
+}
+
+.fieldsform-fld-del {
+    font-weight: normal;
+    font-size: 14px;
+    color:#888;
+    position: absolute;
+    top:4px;
+    right:6px;
+    cursor: pointer;
+    display: none; 
+}
+
+.fieldsform-fld-del:hover {
+    color:#F80;
+}
+
+.fieldsform-fld:hover .fieldsform-fld-del {
+    display: block;
+}
+
 .fieldform-title {
     font-weight: bold;
     padding: 2px 8px;
 }
 
 .fieldform-menu {
-    list-style:o none;
+    list-style:none;
     margin:0;
-    padding:0 6px;
+    padding:3px 6px;
     line-height: 16px;
     background:#CCC;
     border-radius: 4px;
@@ -18,4 +57,19 @@
 
 .fieldform-menu li {
     float: left;
+    margin:0;
+    padding: 0 5px;
+    border-right: 1px solid #AAA;
+    color:#08F;
+    cursor: pointer;
+}
+
+.fieldform-menu li:hover {
+    color:#00F;
+}
+
+.fieldform-menu .fieldform-menu-save {
+    float:right;
+    border-left: 1px solid #AAA;
+    border-right: 0;
 }

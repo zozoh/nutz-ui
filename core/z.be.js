@@ -160,18 +160,20 @@
             var val = opt.text || me.text();
             var html = opt.multi ? '<textarea></textarea>' : '<input>';
             // 计算宽高
+            var off = me.offset();
             var css = {
                 'width': opt.width || me.outerWidth(),
                 'height': opt.height || me.outerHeight(),
-                'position': 'absolute',
-                'top' : 0,
-                'left':0,
+                'position': 'fixed',
+                'top' : off.top,
+                'left': off.left,
                 'font-family': 'Courier',
                 'z-index': 999999
             };
 
             // 显示输入框
-            var jq = $(html).prependTo(me).val(val).attr('old-val', val).attr('min-width', css.width).addClass('z_editit').css(css);
+            var jq = $(html).prependTo(me).val(val).attr('old-val', val);
+            jq.attr('min-width', css.width).addClass('z_editit').css(css);
             jq.data('z-editit-opt', opt);
             return jq.one('blur', func).one('change', func).keydown(onKeydown).keyup(onKeyup).select();
         } // ~ End of editIt
