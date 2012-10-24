@@ -32,9 +32,6 @@
                         return;
                     }
                     var val = $(this).find('.fieldsform-fld-val').text();
-                    var n = val * 1
-                    if("" + n == val)
-                        val = n;
                     obj[key] = val;
                 });
                 return obj;
@@ -44,57 +41,58 @@
             '.fieldform-menu-add': function() {
                 var myBind = $z.ui.getBind(this);
                 myBind.add('new_nm', $z.ui.msg(myBind.option.msg_prefix + 'new_val', 'new_val'));
-                }, '.fieldform-menu-clear': function() {
-                    var myBind = $z.ui.getBind(this);
-                    myBind.jq('.fieldsform-fld').remove();
-                },
-                '.fieldform-menu-save': function() {
-                    var myBind = $z.ui.getBind(this);
-                    var obj = myBind.getData();
-                    myBind.option.on_save.call($(this), obj, myBind);
-                },
-                '.fieldsform-fld-del': function() {
-                    $(this).parents('.fieldsform-fld').remove();
-                },
-                '.fieldsform-fld-nm': function() {
-                    var myBind = $z.ui.getBind(this);
-                    var msg_prefix = myBind.option.msg_prefix;
-                    var jTr = $(this).parents('.fieldsform-fld');
-                    $z.be.editIt(this, {
-                        text: jTr.attr('fld-name'),
-                        after: function(newval, oldval) {
-                            if (newval && newval != oldval) {
-                                var txt = $z.ui.msg(msg_prefix + newval, newval) + ':';
-                                jTr.attr('fld-name', newval);
-                                this.text(txt);
-                            }
-                        }
-                    });
-                },
-                '.fieldsform-fld-val': function() {
-                    $z.be.editIt(this);
-                }
             },
-            on_init: function() {
-                var html = '<div class="fieldsform">';
-                if (this.option.title) {
-                    html += '<div class="fieldform-title">' + this.option.title + '</div>'
-                }
-                html += '    <ul class="fieldform-menu cfloat">'
-                html += '        <li class="fieldform-menu-add">' + $z.ui.msg('fieldsform.add') + '</li>';
-                html += '        <li class="fieldform-menu-clear">' + $z.ui.msg('fieldsform.clear') + '</li>';
-                html += '        <li class="fieldform-menu-save">' + $z.ui.msg('fieldsform.save') + '</li>';
-                html += '    </ul>'
-                html += '    <div class="fieldsform-fields"><table width="100%" cellspacing="1" border="0">';
-                if (this.option.obj) {
-                    for (var key in this.option.obj) {
-                        var val = this.option.obj[key];
-                        html += html_tr(this.option, key, val);
+            '.fieldform-menu-clear': function() {
+                var myBind = $z.ui.getBind(this);
+                myBind.jq('.fieldsform-fld').remove();
+            },
+            '.fieldform-menu-save': function() {
+                var myBind = $z.ui.getBind(this);
+                var obj = myBind.getData();
+                myBind.option.on_save.call($(this), obj, myBind);
+            },
+            '.fieldsform-fld-del': function() {
+                $(this).parents('.fieldsform-fld').remove();
+            },
+            '.fieldsform-fld-nm': function() {
+                var myBind = $z.ui.getBind(this);
+                var msg_prefix = myBind.option.msg_prefix;
+                var jTr = $(this).parents('.fieldsform-fld');
+                $z.be.editIt(this, {
+                    text: jTr.attr('fld-name'),
+                    after: function(newval, oldval) {
+                        if (newval && newval != oldval) {
+                            var txt = $z.ui.msg(msg_prefix + newval, newval) + ':';
+                            jTr.attr('fld-name', newval);
+                            this.text(txt);
+                        }
                     }
-                }
-                html += '    </table></div>';
-                html += '</div>';
-                this.selection.html(html);
+                });
+            },
+            '.fieldsform-fld-val': function() {
+                $z.be.editIt(this);
             }
-        });
-    })(window.jQuery, window.NutzUI, window.NutzUtil);
+        },
+        on_init: function() {
+            var html = '<div class="fieldsform">';
+            if (this.option.title) {
+                html += '<div class="fieldform-title">' + this.option.title + '</div>'
+            }
+            html += '    <ul class="fieldform-menu cfloat">'
+            html += '        <li class="fieldform-menu-add">' + $z.ui.msg('fieldsform.add') + '</li>';
+            html += '        <li class="fieldform-menu-clear">' + $z.ui.msg('fieldsform.clear') + '</li>';
+            html += '        <li class="fieldform-menu-save">' + $z.ui.msg('fieldsform.save') + '</li>';
+            html += '    </ul>'
+            html += '    <div class="fieldsform-fields"><table width="100%" cellspacing="1" border="0">';
+            if (this.option.obj) {
+                for (var key in this.option.obj) {
+                    var val = this.option.obj[key];
+                    html += html_tr(this.option, key, val);
+                }
+            }
+            html += '    </table></div>';
+            html += '</div>';
+            this.selection.html(html);
+        }
+    });
+})(window.jQuery, window.NutzUI, window.NutzUtil);
