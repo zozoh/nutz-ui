@@ -400,7 +400,7 @@
                 return s + list.join('&');
             }
             // 解析
-            var pgan = $z.url.pgan();
+            var pgan = ao || $z.url.pgan();
             var m = /^(!?)(.*)$/.exec(pgan);
             ao = {
                 force: m && m[1] == '!',

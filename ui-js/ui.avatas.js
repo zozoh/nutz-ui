@@ -15,19 +15,15 @@
             var imgsrc = $z.ui.url("/avata/" + this.option.cate + "/" + this.option.nm + "/");
 
             var html = '<div class="avatas">';
-            html += '<div class="avatas-tip">' + $z.ui.msg('avata.tip') + '</div>'
-            html += '<div class="avatas-forms"><table border="0" cellspacing="1">'
+            html += '<div class="avatas-forms cfloat">'
             for (var i = 0; i < this.option.sizes.length; i++) {
                 var sz = this.option.sizes[i];
                 var m = /^([0-9]+)([xX])([0-9]+)$/.exec(sz);
                 var w = m[1] * 1;
                 var h = m[3] * 1;
                 var trID = this.ID + sz;
-                html += '<tr avata-sz="' + sz + '" valign="top" class="avatas-form">';
-                html += '    <td class="avatas-sz">' + sz + '</div>';
-                html += '    <td class="avatas-pic"><img src="' + (imgsrc + sz) + '"';
-                html += '        width="' + w + '" height="' + h + '"/></td>';
-                html += '    <td class="avatas-uploader diss">';
+                html += '<div avata-sz="' + sz + '" valign="top" class="avatas-form avatas-formi-' + sz + ' cfloat">';
+                html += '    <div class="avatas-uploader diss">';
                 html += '        <div class="avatas-uploader-file">';
                 html += '            <input type="file" accept="image/jpeg,image/gif,image/png">';
                 html += '        </div>';
@@ -36,12 +32,24 @@
                 html += '        </label>';
                 html += '        <span class="avatas-uploader-btn">' + $z.ui.msg('avata.upload') + '</span>';
                 html += '        <span class="avatas-process"></span>';
-                html += '    </td>';
-                html += '</tr>';
+                html += '    </div>';
+                html += '    <div class="avatas-sz">' + sz + '</div>';
+                html += '    <div class="avatas-pic"><img src="' + (imgsrc + sz) + '"';
+                html += '        width="' + w + '" height="' + h + '"/></div>';
+                html += '</div>';
             }
-            html += '</table></div>';
             html += '</div>';
             this.selection.html(html);
+        },
+        on_resize : function(w, h) {
+            var jq = this.jq('.avatas-form');
+            var maxH = 0;
+            jq.each(function(){
+                maxH = Math.max(maxH, $(this).height());
+            });
+            jq.each(function(){
+                $(this).css('height', maxH);
+            });
         },
         events: {
             ".avatas-uploader-btn": function() {
@@ -97,7 +105,7 @@
             }
         },
         dft_option: {
-            sizes: ["128x128", "64x64", "32x32"],
+            sizes: ["64x64"],
             // 请按照从大到小的顺序排列
             cate: "u",
             // 分类，需要绑定时配置

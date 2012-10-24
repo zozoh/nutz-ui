@@ -1,0 +1,21 @@
+.fieldsform {
+    padding: 4px 10px;
+}
+
+.fieldform-title {
+    font-weight: bold;
+    padding: 2px 8px;
+}
+
+.fieldform-menu {
+    list-style:o none;
+    margin:0;
+    padding:0 6px;
+    line-height: 16px;
+    background:#CCC;
+    border-radius: 4px;
+}
+
+.fieldform-menu li {
+    float: left;
+}
