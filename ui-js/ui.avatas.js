@@ -70,9 +70,9 @@
                     file: fInput.files[0],
                     url: $z.ui.url("/avata/upload"),
                     headers: {
-                        cate: opt.cate,
-                        nm: opt.nm,
-                        szs: szs
+                        'xhr_cate': opt.cate,
+                        'xhr_nm': opt.nm,
+                        'xhr_szs': szs
                     },
                     on_process: function(e) {
                         jProcessing.text("" + parseInt(e.loaded * 10000 / e.total) / 100 + "%");
