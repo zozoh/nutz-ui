@@ -459,8 +459,12 @@
             if (!key) {
                 return '';
             }
-            var li = $('#__msg__ .' + key.replace(/[.]/g, '_'));
-            return li.size() > 0 ? $(li[0]).html() : (defval ? defval : key);
+            try {
+                var li = $('#__msg__ .' + key.replace(/[.]/g, '_'));
+                return li.size() > 0 ? $(li[0]).html() : (defval ? defval : key);
+            } catch(E){
+                return defval;
+            }
         },
         /*----------------------------------------------------------------------
          * 提供给 bind 对象，获取真实的 URL 的方法
@@ -485,7 +489,7 @@
          * 界面显示给用户一个警告信息
          */
         warn: function(msg) {
-            alert(this.msg(msg));
+            alert(this.msg(msg, msg));
         },
         /*----------------------------------------------------------------------
          * 界面显示给用户一个信息窗口

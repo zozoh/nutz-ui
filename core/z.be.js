@@ -175,7 +175,7 @@
             var jq = $(html).prependTo(me).val(val).attr('old-val', val);
             jq.attr('min-width', css.width).addClass('z_editit').css(css);
             jq.data('z-editit-opt', opt);
-            return jq.one('blur', func).one('change', func).keydown(onKeydown).keyup(onKeyup).select();
+            return jq.one('blur', func).one('change', func).keydown(onKeydown).keyup(onKeyup).focus();
         } // ~ End of editIt
     });
 })(window.jQuery, window.NutzUtil);
