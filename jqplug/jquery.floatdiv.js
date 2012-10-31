@@ -19,16 +19,16 @@
 
 (function($) {
     //................................................. 帮助函数: 清除所有浮动 DIV
-    var close_all_floatdiv = function() {
-            $('.floatdiv').each(function() {
-                var jq = $(this).data('jq');
-                var on_close = $(this).data('on_close');
-                if (typeof on_close == 'function') {
-                    on_close.call(jq, $(this));
-                }
-                $(this).remove();
-            });
-        };
+    function close_all_floatdiv() {
+        $('.floatdiv').each(function() {
+            var jq = $(this).data('jq');
+            var on_close = $(this).data('on_close');
+            if (typeof on_close == 'function') {
+                on_close.call(jq, $(this));
+            }
+            $(this).remove();
+        });
+    }
     // 计算位置，每个函数都接受 off(宿主相对网页的绝对位置)
     // jqSz    : 宿主的尺寸
     // divSz   : 生成的 DIV 的尺寸

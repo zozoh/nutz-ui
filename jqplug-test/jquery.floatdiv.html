@@ -1,0 +1,87 @@
+<!-- 
+    NutzUI的jQuery插件测试页面
+    控件名称为 floatdiv
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Nutz-UI jQuery插件 floatdiv</title>
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="../css/zui.base.css">
+        <!-- JavaScript -->
+        <script type="text/javascript" src="../lib/jquery.js" ></script>
+        <script type="text/javascript" src="../core/z.js" ></script>
+        <script type="text/javascript" src="../jqplug/jquery.floatdiv.js" ></script>
+        <style>
+            .t_sel {
+                width: 100px;
+                height: 100px;
+                background: rgba(0,128,0,1);
+                margin: 200px auto;
+                text-align: center;
+                vertical-align: center;
+                line-height: 100px;
+                font-size: 14px;
+            }
+
+            .gene_btn {
+                width: 120px;
+                height: 26px;
+                line-height: 26px;
+                text-align: center;
+                font-size: 14px;
+                position: absolute;
+                top:10px;
+                right: 10px;
+                background: #888;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+
+            .gene_btn:hover {
+                background: #000;
+                color: #FFF;
+            }
+
+            .fd1 {
+                background: rgba(128,0,0,1);
+                text-align: center;
+            }
+        </style>
+        <script>
+
+            var count = 0;
+            var pa = ['LT', 'MT', 'RT', 'R', 'RB', 'MB', 'LB', 'L'];
+             // * 'LT'     'MT'      'RT'
+             // * 'L'  $(selector)   'R'
+             // * 'LB'     'MB'      'RB'
+            $(document).ready(function() {
+                $('.gene_btn').live('click', geneDiv);
+            });
+
+            function geneDiv(e){
+                if(count >= pa.length){
+                    count = 0;
+                }
+                var pstr = pa[count++];
+                var sel = $('.t_sel');
+                sel.floatdiv({
+                    className: 'fd1',
+                    dockAt: pstr,
+                    width: 100,
+                    // height: 100,
+                    padding: 10,
+                    on_show: function(div) {},
+                    on_close: function(div) {}
+                });
+
+                $('.fd1').html(pstr);
+            }
+        </script>
+    </head>
+    <body>
+        <div class="t_sel">这是一个选区</div>
+        <div class="gene_btn">生成一个浮动块</div>
+    </body>
+</html>
