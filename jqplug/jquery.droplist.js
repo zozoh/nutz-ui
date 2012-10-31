@@ -3,7 +3,11 @@
  *
  * 根据选取绘制一个droplist
  * 
- * 默认支持单选
+ * 依赖floatdiv控件，用来显示浮动的下拉框位置
+ *
+ * {
+ *      
+ * }
  */
 (function($) {
 var OPT_NAME = "droplist_option";
