@@ -69,14 +69,16 @@
                 sel.floatdiv({
                     className: 'fd1',
                     dockAt: pstr,
-                    width: 100,
-                    // height: 100,
-                    padding: 10,
-                    on_show: function(div) {},
+                    width: 130,
+                    // height: 0,
+                    padding: 20,
+                    on_show: function(div) {
+                        div.html(pstr);
+                    },
                     on_close: function(div) {}
                 });
 
-                $('.fd1').html(pstr);
+                // $('.fd1').html(pstr);
             }
         </script>
     </head>
