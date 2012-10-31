@@ -6,8 +6,12 @@
 }
 
 .avatas-process {
-	font-size: 16px;
-	margin-left:20px;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 14px;
+	margin-left:8px;
+	padding:4px 6px;
+	border-radius: 4px;
 }
 
 .avatas-process-ing {
