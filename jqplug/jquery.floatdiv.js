@@ -16,19 +16,18 @@
  *      on_close  : function(div){...}         # 关闭前: this 为宿主对象的 jq，div 为生成的 div 对象的 jq
  * }
  */
-
 (function($) {
     //................................................. 帮助函数: 清除所有浮动 DIV
-    var close_all_floatdiv = function() {
-            $('.floatdiv').each(function() {
-                var jq = $(this).data('jq');
-                var on_close = $(this).data('on_close');
-                if (typeof on_close == 'function') {
-                    on_close.call(jq, $(this));
-                }
-                $(this).remove();
-            });
-        };
+    function close_all_floatdiv() {
+        $('.floatdiv').each(function() {
+            var jq = $(this).data('jq');
+            var on_close = $(this).data('on_close');
+            if (typeof on_close == 'function') {
+                on_close.call(jq, $(this));
+            }
+            $(this).remove();
+        });
+    }
     // 计算位置，每个函数都接受 off(宿主相对网页的绝对位置)
     // jqSz    : 宿主的尺寸
     // divSz   : 生成的 DIV 的尺寸
@@ -83,6 +82,25 @@
             };
         }
     };
+
+    // 计算位置，网页的绝对位置
+    function adjustPosition(sel, fdiv, pstr, padding) {
+        // 计算位置，网页的绝对位置
+        var jqSz = {
+            w: sel.outerWidth(),
+            h: sel.outerHeight()
+        };
+        var divSz = {
+            w: fdiv.outerWidth(),
+            h: fdiv.outerHeight()
+        };
+        var off = _[pstr || 'RB'](sel.offset(), jqSz, divSz, padding || 0);
+        fdiv.css({
+            'top': off.top,
+            'left': off.left
+        });
+    }
+
     // 扩展插件
     $.fn.extend({
         floatdiv: function(opt) {
@@ -97,24 +115,18 @@
             if (opt.height) {
                 div.css('height', opt.height);
             }
-            // 计算位置，网页的绝对位置
-            var jqSz = {
-                w: this.outerWidth(),
-                h: this.outerHeight()
-            };
-            var divSz = {
-                w: div.outerWidth(),
-                h: div.outerHeight()
-            };
-            var off = _[opt.dockAt || 'RB'](this.offset(), jqSz, divSz, opt.padding || 0);
-            div.css({
-                'top': off.top,
-                'left': off.left
-            }).data('jq', this).data('on_close', opt.on_close);
+
+            // 绑定部
+            div.data('jq', this).data('on_close', opt.on_close);
+
             // 显示
             if (typeof opt.on_show == 'function') {
                 opt.on_show.call(this, div);
             }
+
+            // 调整位置
+            adjustPosition(this, div, opt.dockAt, opt.padding);
+
             // 隐藏事件
             if (!$(document.body).attr('floatdiv-event-bound')) {
                 $(document.body).click(close_all_floatdiv);
