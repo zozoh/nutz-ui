@@ -1,25 +1,8 @@
-/*
- * 根据宿主对象，浮动一个 div 出来，显示在相对宿主对象的某个位置
- * <pre>
- * 'LT'     'MT'      'RT'
- * 'L'  $(selector)   'R'
- * 'LB'     'MB'      'RB'
- * </pre>
- * 本插件接受配置对象格式为:
- * {
- *      className : 'xxxx',      # 产生出来的 DIV 的 className
- *      dockAt    : 'lt|rt|...', # 参见位置图
- *      width     : 200,         # DIV 的宽度， 默认为 200
- *      height    : 0,           # DIV 的高度，默认为自动获取
- *      padding   : 10,          # 显示 DIV 的边距，默认为 0
- *      on_show   : function(div){...},        # 显示后: this 为宿主对象的 jq，div 为生成的 div 对象的 jq
- *      on_close  : function(div){...}         # 关闭前: this 为宿主对象的 jq，div 为生成的 div 对象的 jq
- * }
- */
 (function($) {
     var NM_JQ = 'floatdiv-jq';
     var NM_OPT = 'floatdiv-opt';
     var NM_FUNC = 'floatdiv-func';
+    var NM_DIV = 'floatdiv-div'; // 存放到宿主对象里的 DIV
     // 根据 div 中的一个 DOM 元素（包括 floatdiv 本身），获取一个帮助对象
     var getHelper = function(ele) {
             var me = $(ele);
@@ -43,6 +26,7 @@
                 if (typeof helper.option.on_close == 'function') {
                     helper.option.on_close.call(helper.jq, helper.div, helper);
                 }
+                helper.jq.removeData(NM_DIV);
                 $(this).undelegate().remove();
             });
         };
@@ -131,6 +115,24 @@
                 return;
             }
             close_all_floatdiv();
+            // 命令: 关闭
+            if ('close' == opt) {
+                return this;
+            }
+            // 命令: 从数组获取 helper
+            if ('helper' == opt) {
+                var div = this.data(NM_DIV);
+                return getHelper(div);
+            }
+            // 命令: 重新定位
+            if ('dock' == opt) {
+                var div = this.data(NM_DIV);
+                var helper = getHelper(div);
+                var opt = helper.option;
+                adjustPosition(this, div, opt.dockAt, opt.padding);
+                return this;
+            }
+            // 开始初始化
             opt = $.extend(true, {
                 on_show: function(div) {},
                 on_close: function(div) {},
@@ -145,10 +147,9 @@
             if (opt.height) {
                 div.css('height', opt.height);
             }
-
             // 存储相关对象
             div.data(NM_JQ, this).data(NM_OPT, opt);
-
+            this.data(NM_DIV, div);
             // 显示
             if (typeof opt.on_show == 'function') {
                 opt.on_show.call(this, div);
