@@ -107,9 +107,9 @@
     // 扩展插件
     $.fn.extend({
         floatdiv: function(opt) {
-            close_all_floatdiv();
             // 命令: 关闭
             if ('close' == opt) {
+                close_all_floatdiv();
                 return this;
             }
             // 命令: 从数组获取 helper
@@ -125,6 +125,7 @@
                 adjustPosition(this, div, opt.dockAt, opt.padding);
                 return this;
             }
+            close_all_floatdiv();
             // 开始初始化
             opt = $.extend(true, {
                 on_show: function(div) {},
