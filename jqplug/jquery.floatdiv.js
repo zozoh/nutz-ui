@@ -107,13 +107,6 @@
     // 扩展插件
     $.fn.extend({
         floatdiv: function(opt) {
-            if(typeof opt == 'string'){
-                // 命令模式
-                if(opt == 'close'){
-                    close_all_floatdiv();
-                }
-                return;
-            }
             close_all_floatdiv();
             // 命令: 关闭
             if ('close' == opt) {
