@@ -60,7 +60,7 @@
             return null;
         },
         on_init: function() {
-            var html = '<div class="cells">';
+            var html = '<div class="cells ' + (this.option.className || '') + '">';
             for (var i = 0; i < this.option.rows.length; i++) {
                 html += '<div class="cells-row">';
                 for (var j = 0; j < this.option.cols.length; j++) {
