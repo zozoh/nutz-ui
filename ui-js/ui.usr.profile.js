@@ -152,17 +152,18 @@ ui("usr.profile", {
 						html += '</div>';
 						$(html).appendTo(div);
 					}
-					// 绑定处理事件
-					div.delegate(".usr-profile-add-menu-brief-item", "click", on_show_brief);
-					div.delegate(".usr-profile-add-menu-field-item li", "click", on_show_field);
+				},
+				events : {
+					'.usr-profile-add-menu-brief-item' : on_show_brief,
+					'.usr-profile-add-menu-field-item li' : on_show_field
 				}
 			});
 		}
 	}  // ~ end of "events:"
 }); // ~ end of uiDef "usr.profile"
 // .......................................... 添加菜单项的处理函数: brief
-var on_show_brief = function(){
-	var bindID = $(this).parents(".usr-profile-add-menu").attr("usr-profile-bind-id");
+var on_show_brief = function(e, helper){
+	var bindID = helper.div.attr("usr-profile-bind-id");
 	var bind = ui("@" + bindID);
 	var selector = $(this).attr("selector");
 	var jq = bind.jq(selector);

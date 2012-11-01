@@ -46,8 +46,8 @@
     // .......................................... 开始定义控件
     ui('cells', {
         dft_option: {
-            'cols': ['*', '*', 200],
-            'rows': [30, '*']
+            // 'cols': ['*', '*', 200],
+            // 'rows': [30, '*']
         },
         gasket: function(nm) {
             var jRows = this.selection.children('.cells').children('.cells-row');
