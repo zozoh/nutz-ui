@@ -1,0 +1,15 @@
+.jq-icon {
+
+}
+
+.jq-icon-16 {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('jquery.icons.png');
+}
+
+
+.jq-icon-16.arrow_down {
+    background-position: -16px 0px;
+}

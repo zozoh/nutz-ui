@@ -1,0 +1,65 @@
+.droplist {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: #CCC;
+    background: -webkit-gradient(linear, 0 0, 0 100%,from(#FFF), to(#EEE),color-stop(.5,#DDD),color-stop(.75,#BBB));
+    background: -moz-linear-gradient(top, #EEE, #DDD 50%, #BBB 75%, #EEE);
+    color: #000;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 2px #000;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.droplist-sel-val {
+    position: absolute;
+    overflow: hidden;
+}
+
+.droplist-sel-icon {
+    position: absolute;
+}
+
+.droplist-si {
+    margin: 0px auto;
+}
+
+.droplist.show_list .droplist-sel-val{
+    color: rgba(128, 128, 128, 0.5);
+}
+
+.droplist.show_list .droplist-sel-icon {
+    opacity: 0.3;
+}
+
+.droplist-list-container {
+    background-color: rgba(255,255,255,0.8);
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    color: #333;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.droplist-list-ul {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.droplist-list-li {
+    display: block;
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.droplist-list-li:hover {
+    background-color: #E15A01;
+    color: #000;
+}
