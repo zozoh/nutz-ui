@@ -1,6 +1,6 @@
-function makeSlist(num) {
+function makedata(num) {
     var sl = [];
-    for (var i = 0; i < num.length; i++) {
+    for (var i = 0; i < num; i++) {
         sl.push({
             txt: 'xx_' + i,
             val: 'xx_' + i
@@ -21,19 +21,23 @@ $(document).ready(function() {
         filter: function(dl_item){
 
         },
-        paging_mode: "V"
+        paging_mode: "S",
+        data: makedata(20)
     });
 
     // 普通下拉
     $('.d2').droplist({
         sel_click_cls : '.d2_sel',
-        paging_mode: "H"
+        paging_mode: "H",
+        data: makedata(22)
     });
 
     // 普通下拉
     $('.d3').droplist({
         sel_draw: true,
-        paging_mode: "S"
+        paging_mode: "V",
+        show_num_auto: true,
+        data: makedata(12)
     });
 
     // 普通下拉
@@ -42,6 +46,8 @@ $(document).ready(function() {
         paging_mode: "S",
         filter: function(dl_item){
 
-        }
+        },
+        show_num_auto: true,
+        data: makedata(3)
     });
 });

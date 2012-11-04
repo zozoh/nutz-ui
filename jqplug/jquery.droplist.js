@@ -20,7 +20,7 @@
 
             // 无数据显示什么
             opt.nodata = opt.nodata || {
-                txt: '_',
+                txt: '无数据',
                 val: '_'
             };
 
@@ -30,6 +30,13 @@
             opt.dock_padding = opt.dock_padding || 2;
 
             opt.paging_mode = opt.paging_mode || DL_MODE_VERTICAL;
+
+            opt.data_html = opt.data_html ||
+            function(d) {
+                return '<span class="droplist-dldc-li-default" val="' + d.val + '">' + d.txt + '</span>';
+            };
+
+            opt.show_num = opt.show_num || 5;
 
             // 绑定到sel上
             sel.data(DL_OPT, opt);
@@ -58,12 +65,21 @@
             sel.empty().append(html);
         },
         // --------------------------------------------------浮动dl
-        fdiv_draw: function(sel) {
+        fdiv_draw: function(sel, opt) {
             var html = '';
             html += '<div class="droplist-dl-container">';
-            html += '   <div class="droplist-dl-data"></div>';
+            html += '   <div class="droplist-dl-data">';
+            html += '       <div class="droplist-dl-data-msg">' + opt.nodata.txt + '</div>';
+            html += '       <div class="droplist-dl-data-co">';
+            html += '       </div>';
+            html += '   </div>';
             html += '</div>';
             sel.append(html);
+
+            var fco = sel.find('.droplist-dl-data-co');
+            if (opt.paging_mode == DL_MODE_SCROOL) {
+                fco.append('<ul class="droplist-dldc-ul-s"></ul>');
+            }
         },
         filter_draw: function(sel, opt) {
             var html = '';
@@ -87,7 +103,7 @@
             }
             html += '       </div>';
             // 分页信息
-            html += '       <div class="droplist-dl-pager-info droplist-dl-pager-item" cur="0" total="0">0 / 0</div>';
+            html += '       <div class="droplist-dl-pager-info droplist-dl-pager-item" cur="0" tol="0" mode="' + opt.paging_mode + '">0 / 0</div>';
             // 下一页
             html += '       <div class="droplist-dl-pager-next droplist-dl-pager-item">';
             // 上一页
@@ -99,6 +115,64 @@
             html += '   </div>';
             html += '</div>';
             sel.append(html);
+        },
+        // ------------------------------------------- dl_list_item
+        dl_list_html: function(fdiv, dlist, opt) {
+            // 取消显示
+            fdiv.find('.droplist-dl-data-msg').html('');
+
+            // 显示数据
+            if (opt.paging_mode == DL_MODE_SCROOL) {
+                var ul = fdiv.find('.droplist-dldc-ul-s');
+                var html = '';
+                for (var i = 0; i < dlist.length; i++) {
+                    var d = dlist[i];
+                    html += dom.dl_list_li_html(d, opt);
+                }
+                ul.append(html);
+            } else {
+                var tp = Math.floor(dlist.length / opt.show_num);
+                if (dlist.length % opt.show_num != 0) {
+                    tp++;
+                }
+                fdiv.find('.droplist-dl-pager-info').html('1' + ' / ' + tp).attr('cur', 1).attr('tol', tp);
+
+                var html;
+                if (opt.paging_mode == DL_MODE_HORIZONTAL) {
+                    html = dom.dl_list_HV_ul_html(tp, opt, dlist, 'droplist-dldc-ul-h');
+                } else if (opt.paging_mode == DL_MODE_VERTICAL) {
+                    html = dom.dl_list_HV_ul_html(tp, opt, dlist, 'droplist-dldc-ul-v');
+                }
+
+                fdiv.find('.droplist-dl-data-co').append(html);
+            }
+        },
+        dl_list_HV_ul_html: function(tp, opt, dlist, ul_cls) {
+            var html = '';
+            for (var i = 0; i < tp; i++) {
+                html += '<ul class="' + ul_cls + '">';
+                var s = i * opt.show_num;
+                var e = i * opt.show_num + opt.show_num;
+                if (e >= dlist.length) {
+                    e = dlist.length;
+                }
+                var udata = dlist.slice(s, e);
+                for (var j = 0; j < udata.length; j++) {
+                    var d = udata[j];
+                    html += dom.dl_list_li_html(d, opt);
+                }
+                html += '</ul>';
+            }
+            return html;
+        },
+        dl_list_li_html: function(d, opt) {
+            var html = '';
+            html += '<li class="droplist-dldc-li">';
+            html += '   <div class="droplist-dldc-li-item">';
+            html += opt.data_html(d);
+            html += '   </div>';
+            html += '</li>';
+            return html;
         }
     };
 
@@ -113,7 +187,7 @@
                 'width': ssz.w - 26
             });
         },
-        fdiv_resize: function(fdiv) {
+        fdiv_resize: function(fdiv, opt) {
             var fsz = {
                 w: fdiv.width(),
                 h: fdiv.height()
@@ -122,6 +196,75 @@
             pjq.find('.droplist-dl-pager-item').css({
                 'width': pjq.width() / 3
             });
+
+            fdiv.find('.droplist-dl-data-msg').css({
+                'top': fsz.h / 2 - 45
+            });
+
+            var dldatajq = fdiv.find('.droplist-dl-data');
+
+            // 是否显示 滚动条
+            fdiv.find('.droplist-dl-data-co').css({
+                'width': dldatajq.width(),
+                'height': dldatajq.height(),
+                'overflow-x': 'hidden',
+                'overflow-y': opt.paging_mode == DL_MODE_SCROOL ? 'auto' : 'hidden'
+            });
+        },
+        dl_co_resize: function(fdiv, opt) {
+            var fd = fdiv.find('.droplist-dl-data');
+            var fco = fdiv.find('.droplist-dl-data-co');
+            var ful = fco.children();
+            var fli = fdiv.find('.droplist-dldc-li');
+            var co_h = fli.height() * opt.show_num;
+            // 如果是自增长的话
+            if (opt.paging_mode == DL_MODE_SCROOL && opt.show_num_auto) {
+                co_h = fli.height() * fli.length;
+            }
+            fco.css({
+                'height': co_h
+            });
+            fd.css({
+                'height': co_h + 10
+            });
+
+            ful.css({
+                'width': fco.width()
+            });
+
+            var fpg = fdiv.find('.droplist-dl-pager-info');
+
+            if (opt.paging_mode == DL_MODE_HORIZONTAL) {
+                fpg.attr('ml', fco.width() + 20);
+                fco.css({
+                    'width': (fco.width() + 20) * ful.length
+                });
+            } else if (opt.paging_mode == DL_MODE_VERTICAL) {
+                fpg.attr('ml', fco.height());
+                fco.css({
+                    'height': fco.height()* ful.length
+                });
+            }
+        }
+    };
+
+    var data = {
+        load: function(fdiv, opt) {
+            var dlist;
+
+            if ($.isArray(opt.data)) {
+                dlist = opt.data;
+            } else if (typeof opt.data == 'function') {
+                // 同步方法也会返回数组
+                dlist = opt.data();
+            }
+
+            // 如果是数组，直接加载
+            if ($.isArray(dlist)) {
+                dom.dl_list_html(fdiv, dlist, opt);
+                // 调整高度
+                layout.dl_co_resize(fdiv, opt);
+            }
         }
     };
 
@@ -149,7 +292,7 @@
                 padding: opt.dock_padding,
                 on_show: function(div) {
 
-                    dom.fdiv_draw(div);
+                    dom.fdiv_draw(div, opt);
 
                     var fdiv = div.find('.droplist-dl-container');
 
@@ -165,12 +308,12 @@
                         dom.bottom_bar_draw(fdiv, opt);
                     }
 
-                    // 绑定事件
-                    fdiv.delegate('.droplist-dl-filter', 'click', events.filter_focus);
-                    fdiv.delegate('.droplist-dl-filter-val', 'change', events.filter_change);
-
                     // 调整布局
-                    layout.fdiv_resize(fdiv);
+                    layout.fdiv_resize(fdiv, opt);
+
+                    // 加载数据
+                    data.load(fdiv, opt);
+
                 },
                 on_close: function(div) {
                     var fdiv = div.find('.droplist-dl-container');
@@ -180,7 +323,13 @@
                     sel.removeClass('droplist-dl-show');
                 },
                 events: {
-                    '.droplist-dl-container': events.fdiv_click
+                    'change:.droplist-dl-filter-val': events.filter_change,
+                    '.droplist-dl-container': events.fdiv_click,
+                    '.droplist-dl-filter': events.filter_focus,
+                    '.droplist-dldc-li-item': events.dl_item_click,
+                    // 分页显示
+                    '.droplist-dl-pager-prev': events.dl_list_prev,
+                    '.droplist-dl-pager-next': events.dl_list_next
                 }
             });
 
@@ -192,19 +341,68 @@
             e.stopPropagation();
             return;
         },
-        filter_focus: function(e){
+        filter_focus: function(e) {
             $(this).find('.droplist-dl-filter-val').focus();
         },
-        filter_change: function(e){
+        filter_change: function(e, helper) {
             var cv = $(this).val();
+            alert(cv);
             // 触发过滤事件
             // TODO
+        },
+        dl_item_click: function(e, helper) {
+            // TODO
+        },
+        dl_list_prev: function(e, helper) {
+            var pg = $(this).parent().find('.droplist-dl-pager-info');
+            var mode = pg.attr('mode');
+            var cur = parseInt(pg.attr('cur'));
+            var tol = parseInt(pg.attr('tol'));
+            var ml = parseInt(pg.attr('ml'));
+            if (cur == 1) {
+                return;
+            }
+            cur--;
+            pg.attr('cur', cur);
+            pg.html(cur + ' / ' + tol);
+            var cssp;
+            if (mode == DL_MODE_HORIZONTAL) {
+                cssp = {
+                    'left': -1 * cur * ml + ml + 10
+                };
+            } else if (mode == DL_MODE_VERTICAL) {
+                cssp = {
+                    'top': -1 * cur * ml + ml + 5
+                };
+            }
+            helper.div.find('.droplist-dl-data-co').animate(cssp, 200);
+        },
+        dl_list_next: function(e, helper) {
+            var pg = $(this).parent().find('.droplist-dl-pager-info');
+            var mode = pg.attr('mode');
+            var cur = parseInt(pg.attr('cur'));
+            var tol = parseInt(pg.attr('tol'));
+            var ml = parseInt(pg.attr('ml'));
+            if (cur == tol) {
+                return;
+            }
+            cur++;
+            pg.attr('cur', cur);
+            pg.html(cur + ' / ' + tol);
+            var cssp;
+            if (mode == DL_MODE_HORIZONTAL) {
+                cssp = {
+                    'left': -1 * cur * ml + ml + 10
+                };
+            } else if (mode == DL_MODE_VERTICAL) {
+                cssp = {
+                    'top': -1 * cur * ml + ml + 5
+                };
+            }
+            helper.div.find('.droplist-dl-data-co').animate(cssp, 200);
         }
     };
 
-    var depose = function(sel) {
-
-        };
 
     $.fn.extend({
         droplist: function(opt, dval) {
@@ -223,6 +421,7 @@
             } else {
                 sel.delegate(opt.sel_click_cls, 'click', events.sel_click);
             }
+
 
             // 调整一下布局哟
             layout.sel_resize(sel);
