@@ -135,9 +135,11 @@
             // 开始绘制
             var div = $('<div class="floatdiv"></div>').appendTo(document.body);
             div.addClass(opt.className || '').css({
-                'position': 'fixed',
-                'width': opt.width || 200
+                'position': 'fixed'
             });
+            if (opt.width) {
+                div.css('width', opt.width);
+            }
             if (opt.height) {
                 div.css('height', opt.height);
             }
