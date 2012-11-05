@@ -1,0 +1,35 @@
+.jq-icon {
+
+}
+
+.jq-icon-16 {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('img/jquery.icons.png');
+}
+
+
+.jq-icon-16.arrow-down {
+    background-position: -16px 0px;
+}
+.jq-icon-16.white-arrow-up {
+    background-position: 0px -32px;
+}
+.jq-icon-16.white-arrow-down {
+    background-position: -16px -32px;
+}
+.jq-icon-16.white-arrow-left {
+    background-position: -32px -32px;
+}
+.jq-icon-16.white-arrow-right {
+    background-position: -48px -32px;
+}
+
+
+.jq-loading-16 {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url('img/loading_001.gif');
+}
