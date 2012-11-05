@@ -64,4 +64,36 @@ $(document).ready(function() {
             return makedata(parseInt(Math.random() * 10) + 1);
         }
     });
+
+
+    // 普通下拉
+    $('.d5').droplist({
+        sel_draw: false,
+        paging_mode: "S",
+        show_num_auto: true,
+        data: function() {
+            return [{
+                num: 1,
+                val: 1
+            }, {
+                num: 2,
+                val: 2
+            }, {
+                num: 3,
+                val: 3
+            }, {
+                num: 4,
+                val: 4
+            }, {
+                num: 5,
+                val: 5
+            }];
+        },
+        data_html: function(d) {
+            return '<i class="icon-test-64 t' + d.val + '"></i>'
+        },
+        on_change: function(oi, ni) {
+            $('.d5').html('<i class="icon-test-64 t' + ni.val + '"></i>');
+        }
+    });
 });

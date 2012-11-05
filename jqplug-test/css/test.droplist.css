@@ -1,0 +1,27 @@
+
+.icon-test-64 {
+    display: block;
+    width: 64px;
+    height: 64px;
+    background: url('64Icon.png');
+}
+
+.icon-test-64.t1{
+    background-position: 0px 0px;
+}
+
+.icon-test-64.t2{
+    background-position: 0px -64px;
+}
+
+.icon-test-64.t3{
+    background-position: 0px -128px;
+}
+
+.icon-test-64.t4{
+    background-position: 0px -192px;
+}
+
+.icon-test-64.t5{
+    background-position: 0px -256px;
+}

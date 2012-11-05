@@ -78,6 +78,9 @@
             return sel.data(DL_OPT);
         },
         sel: function(jq) {
+            if (jq.hasClass('droplist-parent')) {
+                return jq;
+            }
             return jq.parents('.droplist-parent');
         }
     };
@@ -360,16 +363,20 @@
             }
 
             var opt = util.opt(sel);
-            // 绘制浮动框
-            var fsz = {
-                w: sel.width(),
-                h: 0
-            };
+
+            // 设定宽度(左右padding)
+            var fd_w = 20;
+
+            if (opt.fd_width) {
+                fd_w += opt.fd_width;
+            } else {
+                fd_w += sel.width();
+            }
 
             sel.floatdiv({
                 className: 'droplist-dl-fd',
                 dockAt: opt.dock_at,
-                width: fsz.w,
+                width: fd_w,
                 padding: opt.dock_padding,
                 on_show: function(div) {
 
