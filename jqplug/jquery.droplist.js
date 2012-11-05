@@ -276,9 +276,9 @@
             var fpg = fdiv.find('.droplist-dl-pager-info');
 
             if (opt.paging_mode == DL_MODE_HORIZONTAL) {
-                fpg.attr('ml', fco.width() + 20);
+                fpg.attr('ml', fco.width() + 10);
                 fco.css({
-                    'width': (fco.width() + 20) * ful.length
+                    'width': (fco.width() + 10) * ful.length
                 });
             } else if (opt.paging_mode == DL_MODE_VERTICAL) {
                 fpg.attr('ml', fco.height() + 10);
@@ -365,7 +365,7 @@
             var opt = util.opt(sel);
 
             // 设定宽度(左右padding)
-            var fd_w = 20;
+            var fd_w = 10;
 
             if (opt.fd_width) {
                 fd_w += opt.fd_width;
@@ -483,7 +483,7 @@
             var cssp;
             if (mode == DL_MODE_HORIZONTAL) {
                 cssp = {
-                    'left': -1 * cur * ml + ml + 10
+                    'left': -1 * cur * ml + ml + 5
                 };
             } else if (mode == DL_MODE_VERTICAL) {
                 cssp = {

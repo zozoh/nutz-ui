@@ -90,10 +90,10 @@ $(document).ready(function() {
             }];
         },
         data_html: function(d) {
-            return '<i class="icon-test-64 t' + d.val + '"></i>'
+            return '<i class="icon-test-64 fl t' + d.val + '"></i>'
         },
         on_change: function(oi, ni) {
-            $('.d5').html('<i class="icon-test-64 t' + ni.val + '"></i>');
+            $('.d5').html('<i class="icon-test-64 fl t' + ni.val + '"></i>');
         }
     });
 });

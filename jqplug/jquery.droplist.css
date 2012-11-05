@@ -51,7 +51,7 @@
 .droplist-dl-top {
     width: 100%;
     height: 29px;
-    padding: 5px 10px 2px;
+    padding: 5px 5px 2px;
 }
 
 .droplist-dl-filter {
@@ -95,7 +95,7 @@
 .droplist-dl-data {
     width: 100%;
     height: 200px;
-    padding: 5px 10px;
+    padding: 5px 5px;
     position: relative;
     overflow: hidden;
 }
@@ -123,7 +123,7 @@
 
 .droplist-dl-data-co {
     position: absolute;
-    left: 10px;
+    left: 5px;
     top: 5px;
 }
 
@@ -141,7 +141,7 @@
     width: auto;
     height: auto;
     float: left;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .droplist-dldc-ul-v {
@@ -156,7 +156,6 @@
 }
 
 .droplist-dldc-li-item {
-    padding: 2px;
     width: 100%;
     height: 100%;
 }
@@ -182,7 +181,7 @@
 .droplist-dl-bottom {
     width: 100%;
     height: 26px;
-    padding: 0px 10px 5px;
+    padding: 0px 5px 5px;
 }
 
 .droplist-dl-pager {
