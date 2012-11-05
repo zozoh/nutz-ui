@@ -3,15 +3,16 @@
  */
 (function($) {
 
-    var DL_OPT = 'droplist_opt';
-
-    var DL_COUNT = 0;
-
+    var DL_OPT = 'droplist-opt';
 
     var DL_MODE_SCROOL = 'S';
     var DL_MODE_HORIZONTAL = 'H';
     var DL_MODE_VERTICAL = 'V';
 
+    var LI_DATA = 'droplist-li-data';
+
+    var MSG_NODATA = 'no data';
+    var MSG_LOADING = 'loading...'
 
     var util = {
         check_opt: function(sel, opt) {
@@ -36,7 +37,37 @@
                 return '<span class="droplist-dldc-li-default" val="' + d.val + '">' + d.txt + '</span>';
             };
 
+            opt.data_ckb = opt.data_ckb ||
+            function(d, li) {
+                if (li.find('.droplist-dldc-li-default').attr('val') == d.val) {
+                    li.addClass('hlt');
+                    return true;
+                }
+                return false;
+            };
+
             opt.show_num = opt.show_num || 5;
+
+            opt.on_change = opt.on_change ||
+            function(oi, ni) {
+                var sel = $(this);
+                var opt = util.opt(sel);
+                sel.find('.droplist-sel-val').html(ni.txt).attr('val', ni.val);
+            };
+
+            if (opt.filter == 'default') {
+                opt.filter = function(fstr, dl_item) {
+                    if (new RegExp(fstr).test(dl_item.txt)) {
+                        return true;
+                    }
+                    return false;
+                };
+            }
+
+            // 就对象
+            opt.oi = opt.nodata;
+
+            opt._ft_ = '';
 
             // 绑定到sel上
             sel.data(DL_OPT, opt);
@@ -45,10 +76,6 @@
         },
         opt: function(sel) {
             return sel.data(DL_OPT);
-        },
-        next_dl: function() {
-            DL_COUNT++;
-            return 'droplist-dl-fd-' + DL_COUNT;
         },
         sel: function(jq) {
             return jq.parents('.droplist-parent');
@@ -69,23 +96,18 @@
             var html = '';
             html += '<div class="droplist-dl-container">';
             html += '   <div class="droplist-dl-data">';
-            html += '       <div class="droplist-dl-data-msg">' + opt.nodata.txt + '</div>';
+            html += '       <div class="droplist-dl-data-msg">' + MSG_NODATA + '</div>';
             html += '       <div class="droplist-dl-data-co">';
             html += '       </div>';
             html += '   </div>';
             html += '</div>';
             sel.append(html);
-
-            var fco = sel.find('.droplist-dl-data-co');
-            if (opt.paging_mode == DL_MODE_SCROOL) {
-                fco.append('<ul class="droplist-dldc-ul-s"></ul>');
-            }
         },
         filter_draw: function(sel, opt) {
             var html = '';
             html += '<div class="droplist-dl-top">';
             html += '   <div class="droplist-dl-filter">';
-            html += '       <input class="droplist-dl-filter-val" placeholder="' + opt.filter_txt + '"/>';
+            html += '       <input class="droplist-dl-filter-val" value="' + opt._ft_ + '" placeholder="' + opt.filter_txt + '"/>';
             html += '   </div>';
             html += '</div>';
             sel.prepend(html);
@@ -117,53 +139,52 @@
             sel.append(html);
         },
         // ------------------------------------------- dl_list_item
-        dl_list_html: function(fdiv, dlist, opt) {
-            // 取消显示
-            fdiv.find('.droplist-dl-data-msg').html('');
+        dl_list_html: function(fdiv, opt, dlist) {
 
-            // 显示数据
-            if (opt.paging_mode == DL_MODE_SCROOL) {
-                var ul = fdiv.find('.droplist-dldc-ul-s');
-                var html = '';
-                for (var i = 0; i < dlist.length; i++) {
-                    var d = dlist[i];
-                    html += dom.dl_list_li_html(d, opt);
-                }
-                ul.append(html);
+            var fco = fdiv.find('.droplist-dl-data-co').empty();
+
+            if (dlist.length == 0) {
+                fdiv.find('.droplist-dl-data-msg').html(MSG_NODATA);
             } else {
-                var tp = Math.floor(dlist.length / opt.show_num);
-                if (dlist.length % opt.show_num != 0) {
-                    tp++;
+                // 取消显示
+                fdiv.find('.droplist-dl-data-msg').html('');
+                // 显示数据
+                if (opt.paging_mode == DL_MODE_SCROOL) {
+                    fco.append('<ul class="droplist-dldc-ul-s"></ul>');
+                    var ul = fdiv.find('.droplist-dldc-ul-s');
+                    dom.dl_list_ul_html(ul, dlist, opt);
+                } else {
+                    if (opt.paging_mode == DL_MODE_HORIZONTAL) {
+                        dom.dl_list_HV_ul_html(fdiv, fco, opt, dlist, 'droplist-dldc-ul-h');
+                    } else if (opt.paging_mode == DL_MODE_VERTICAL) {
+                        dom.dl_list_HV_ul_html(fdiv, fco, opt, dlist, 'droplist-dldc-ul-v');
+                    }
                 }
-                fdiv.find('.droplist-dl-pager-info').html('1' + ' / ' + tp).attr('cur', 1).attr('tol', tp);
-
-                var html;
-                if (opt.paging_mode == DL_MODE_HORIZONTAL) {
-                    html = dom.dl_list_HV_ul_html(tp, opt, dlist, 'droplist-dldc-ul-h');
-                } else if (opt.paging_mode == DL_MODE_VERTICAL) {
-                    html = dom.dl_list_HV_ul_html(tp, opt, dlist, 'droplist-dldc-ul-v');
-                }
-
-                fdiv.find('.droplist-dl-data-co').append(html);
             }
         },
-        dl_list_HV_ul_html: function(tp, opt, dlist, ul_cls) {
-            var html = '';
+        dl_list_HV_ul_html: function(fdiv, fco, opt, dlist, ul_cls) {
+            // 分页信息
+            var tp = Math.floor(dlist.length / opt.show_num);
+            if (dlist.length % opt.show_num != 0) {
+                tp++;
+            }
+            fdiv.find('.droplist-dl-pager-info').html('1' + ' / ' + tp).attr('cur', 1).attr('tol', tp);
+
+            // 绘制数据
             for (var i = 0; i < tp; i++) {
+                var html = '';
                 html += '<ul class="' + ul_cls + '">';
+                html += '</ul>';
+                fco.append(html);
+                var ul = fco.children().last();
                 var s = i * opt.show_num;
                 var e = i * opt.show_num + opt.show_num;
                 if (e >= dlist.length) {
                     e = dlist.length;
                 }
                 var udata = dlist.slice(s, e);
-                for (var j = 0; j < udata.length; j++) {
-                    var d = udata[j];
-                    html += dom.dl_list_li_html(d, opt);
-                }
-                html += '</ul>';
+                dom.dl_list_ul_html(ul, udata, opt);
             }
-            return html;
         },
         dl_list_li_html: function(d, opt) {
             var html = '';
@@ -173,6 +194,23 @@
             html += '   </div>';
             html += '</li>';
             return html;
+        },
+        dl_list_ul_html: function(ul, udata, opt) {
+            for (var j = 0; j < udata.length; j++) {
+                var d = udata[j];
+                var html = dom.dl_list_li_html(d, opt);
+                ul.append(html);
+                ul.children().last().children().data(LI_DATA, d);
+            }
+        },
+        hlt_dl_ckb_list: function(fdiv, opt) {
+            var lilist = fdiv.find('.droplist-dldc-li-item');
+            for (var i = 0; i < lilist.length; i++) {
+                var li = $(lilist[i]);
+                if (opt.data_ckb(opt.oi, li)) {
+                    break;
+                }
+            }
         }
     };
 
@@ -240,37 +278,80 @@
                     'width': (fco.width() + 20) * ful.length
                 });
             } else if (opt.paging_mode == DL_MODE_VERTICAL) {
-                fpg.attr('ml', fco.height());
+                fpg.attr('ml', fco.height() + 10);
                 fco.css({
-                    'height': fco.height()* ful.length
+                    'height': (fco.height() + 10) * ful.length
                 });
             }
         }
     };
 
     var data = {
-        load: function(fdiv, opt) {
-            var dlist;
+        load: function(sel, dlist) {
+            var opt = util.opt(sel);
+            var fdiv = opt.fdiv;
 
-            if ($.isArray(opt.data)) {
-                dlist = opt.data;
-            } else if (typeof opt.data == 'function') {
-                // 同步方法也会返回数组
-                dlist = opt.data();
+            if (!fdiv) {
+                // 已经没有fdiv了
+                return;
+            }
+
+            if (!dlist) {
+                // 初始化加载
+                if ($.isArray(opt.data)) {
+                    dlist = opt.data;
+                } else if (typeof opt.data == 'function') {
+                    // 加载数据
+                    fdiv.find('.droplist-dl-data-msg').html('<i class="lding jq-loading-16"></i>');
+                    // 同步方法也会返回数组
+                    dlist = opt.data.call(sel);
+                }
             }
 
             // 如果是数组，直接加载
             if ($.isArray(dlist)) {
-                dom.dl_list_html(fdiv, dlist, opt);
-                // 调整高度
-                layout.dl_co_resize(fdiv, opt);
+                data._load(fdiv, opt, dlist)
             }
+        },
+        _load: function(fdiv, opt, dlist) {
+
+            opt._dlist = dlist;
+
+            var ndlist;
+
+            if (typeof opt.filter == 'function') {
+                ndlist = data.filter_data(opt.filter, opt._ft_, opt._dlist);
+            } else {
+                ndlist = dlist;
+            }
+
+            // 加载数据
+            dom.dl_list_html(fdiv, opt, ndlist);
+            // 调整高度
+            layout.dl_co_resize(fdiv, opt);
+            // 高亮
+            dom.hlt_dl_ckb_list(fdiv, opt);
+        },
+        filter_data: function(filter, fstr, dlist) {
+            var nplist = [];
+            for (var i = 0; i < dlist.length; i++) {
+                var d = dlist[i];
+                // 通过过滤
+                if (filter(fstr, d)) {
+                    nplist.push(d);
+                }
+            }
+            return nplist;
+        },
+        reload: function(sel, opt) {
+            data.load(sel, opt._dlist);
         }
     };
 
     var events = {
         sel_click: function(e) {
             e.stopPropagation();
+
             var sel = util.sel($(this));
 
             if (sel.hasClass('droplist-dl-show')) {
@@ -296,12 +377,14 @@
 
                     var fdiv = div.find('.droplist-dl-container');
 
+                    // 记录一下，回调会用到
+                    opt.fdiv = fdiv;
+
                     // 是否添加filter
                     if (opt.filter && typeof opt.filter == 'function') {
                         dom.filter_draw(fdiv, opt);
                     }
 
-                    // 显示内容
                     // 是否添加底部按钮条
                     if (opt.paging_mode != DL_MODE_SCROOL) {
                         // 水平，垂直
@@ -312,8 +395,7 @@
                     layout.fdiv_resize(fdiv, opt);
 
                     // 加载数据
-                    data.load(fdiv, opt);
-
+                    data.load(sel);
                 },
                 on_close: function(div) {
                     var fdiv = div.find('.droplist-dl-container');
@@ -321,6 +403,8 @@
                     fdiv.undelegate();
                     // 去掉class
                     sel.removeClass('droplist-dl-show');
+
+                    opt.fdiv = null;
                 },
                 events: {
                     'change:.droplist-dl-filter-val': events.filter_change,
@@ -346,47 +430,47 @@
         },
         filter_change: function(e, helper) {
             var cv = $(this).val();
-            alert(cv);
+            var opt = util.opt(helper.jq);
             // 触发过滤事件
-            // TODO
+            if (cv) {
+                opt._ft_ = $.trim(cv);
+            } else {
+                opt._ft_ = '';
+            }
+            // 重现加载数据
+            data.reload(helper.jq, opt);
         },
         dl_item_click: function(e, helper) {
-            // TODO
+            e.stopPropagation();
+            var li = $(this);
+            var ldata = $(this).data(LI_DATA);
+            var opt = util.opt(helper.jq);
+            opt.on_change.call(helper.jq, opt.oi, ldata);
+            opt.oi = ldata;
+            // 高亮自己
+            helper.div.find('.droplist-dldc-li-item').removeClass('hlt');
+            li.addClass('hlt');
+            // 关掉fdiv
+            helper.jq.floatdiv('close');
         },
         dl_list_prev: function(e, helper) {
-            var pg = $(this).parent().find('.droplist-dl-pager-info');
-            var mode = pg.attr('mode');
-            var cur = parseInt(pg.attr('cur'));
-            var tol = parseInt(pg.attr('tol'));
-            var ml = parseInt(pg.attr('ml'));
-            if (cur == 1) {
-                return;
-            }
-            cur--;
-            pg.attr('cur', cur);
-            pg.html(cur + ' / ' + tol);
-            var cssp;
-            if (mode == DL_MODE_HORIZONTAL) {
-                cssp = {
-                    'left': -1 * cur * ml + ml + 10
-                };
-            } else if (mode == DL_MODE_VERTICAL) {
-                cssp = {
-                    'top': -1 * cur * ml + ml + 5
-                };
-            }
-            helper.div.find('.droplist-dl-data-co').animate(cssp, 200);
+            var pbtn = $(this);
+            events.dl_list_move(pbtn, helper, false);
         },
         dl_list_next: function(e, helper) {
-            var pg = $(this).parent().find('.droplist-dl-pager-info');
+            var pbtn = $(this);
+            events.dl_list_move(pbtn, helper, true);
+        },
+        dl_list_move: function(pbtn, helper, p) {
+            var pg = pbtn.parent().find('.droplist-dl-pager-info');
             var mode = pg.attr('mode');
             var cur = parseInt(pg.attr('cur'));
             var tol = parseInt(pg.attr('tol'));
             var ml = parseInt(pg.attr('ml'));
-            if (cur == tol) {
+            if (cur == 0 || cur == (p ? tol : 1)) {
                 return;
             }
-            cur++;
+            cur += (p ? 1 : -1);
             pg.attr('cur', cur);
             pg.html(cur + ' / ' + tol);
             var cssp;
@@ -404,27 +488,69 @@
     };
 
 
+    var commands = {
+        depose: function() {
+            var sel = this;
+            sel.undelegate();
+            sel.empty();
+        },
+        load: function(dlist) {
+            data.load(this, dlist);
+        },
+        set: function(nd) {
+            var sel = this;
+            var opt = util.opt(sel);
+            opt.on_change.call(sel, opt.oi, nd);
+            opt.oi = nd;
+            return;
+        },
+        get: function() {
+            var sel = this;
+            return util.opt(sel).oi;
+        }
+    };
+
+
     $.fn.extend({
-        droplist: function(opt, dval) {
+        droplist: function(opt, a1, a2, a3) {
+
             // 选区
             var sel = this;
 
-            // 检查opt文件的配置项是否完整
-            opt = util.check_opt(sel, opt);
+            // 初始化模式
+            if (typeof opt == 'object') {
+                // 检查有效选区
+                if (sel.size() == 0) {
+                    throw '$.fn.droplist : unknown sel "' + sel.selector + '"';
+                }
+                // 检查opt文件的配置项是否完整
+                opt = util.check_opt(sel, opt);
 
-            sel.addClass('droplist-parent');
+                sel.addClass('droplist-parent');
 
-            // sel是否需要绘制
-            if (opt.sel_draw) {
-                dom.sel_draw(sel, opt);
-                sel.delegate('.droplist-sel', 'click', events.sel_click);
-            } else {
-                sel.delegate(opt.sel_click_cls, 'click', events.sel_click);
+                // sel是否需要绘制
+                if (opt.sel_draw) {
+                    dom.sel_draw(sel, opt);
+                    sel.delegate('.droplist-sel', 'click', events.sel_click);
+                } else {
+                    sel.delegate(opt.sel_click_cls, 'click', events.sel_click);
+                }
+
+                // 调整一下布局哟
+                layout.sel_resize(sel);
             }
-
-
-            // 调整一下布局哟
-            layout.sel_resize(sel);
+            // 命令模式
+            else if (typeof opt == "string") {
+                if ('function' != typeof commands[opt]) {
+                    throw "$.fn.droplist : don't support command '" + opt + "'";
+                }
+                if (util.opt(sel)) {
+                    var re = commands[opt].call(sel, a1, a2, a3);
+                    if (re !== undefined) {
+                        return re;
+                    }
+                }
+            }
 
             return sel;
         }

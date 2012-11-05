@@ -168,6 +168,9 @@
             }
 
             // 绑定用户自定义事件
+            // FIXME 
+            // 这里有个bug 因为是在on_show以后调用，也是就html已经生成完毕后
+            // 如果一部分html是动态生成的，就没有NM_FUNC的绑定了，而且一个元素上无法绑定多个事件
             for (var key in opt.events) {
                 var func = opt.events[key];
                 if (typeof func == 'function') {
@@ -180,6 +183,9 @@
                     div.delegate(selector, eventType, function(e) {
                         var helper = getHelper(this);
                         var funcKey = $(this).attr(NM_FUNC);
+                        if(!funcKey) {
+                            funcKey = '.' + this.className;
+                        }   
                         var func = helper.option.events[funcKey];
                         func.call(this, e, helper);
                     });

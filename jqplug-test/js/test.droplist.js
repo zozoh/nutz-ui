@@ -18,18 +18,21 @@ $(document).ready(function() {
             val: '_'
         },
         sel_draw: true,
-        filter: function(dl_item){
-
-        },
+        filter: 'default',
         paging_mode: "S",
         data: makedata(20)
+    }).droplist('set', {
+        txt: 'xx_3',
+        val: 'xx_3'
     });
 
     // 普通下拉
     $('.d2').droplist({
-        sel_click_cls : '.d2_sel',
+        sel_click_cls: '.d2_sel',
         paging_mode: "H",
-        data: makedata(22)
+        data: function() {
+            return makedata(22);
+        }
     });
 
     // 普通下拉
@@ -37,17 +40,28 @@ $(document).ready(function() {
         sel_draw: true,
         paging_mode: "V",
         show_num_auto: true,
-        data: makedata(12)
+        filter: function(fstr, dl_item) {
+            if (new RegExp(fstr).test(dl_item.txt)) {
+                return true;
+            }
+            return false;
+        },
+        data: function() {
+            var sel = this;
+            setTimeout(function() {
+                sel.droplist('load', makedata(15));
+            }, 2000);
+        }
     });
 
     // 普通下拉
     $('.d4').droplist({
         sel_draw: true,
         paging_mode: "S",
-        filter: function(dl_item){
-
-        },
+        filter: 'default',
         show_num_auto: true,
-        data: makedata(3)
+        data: function() {
+            return makedata(parseInt(Math.random() * 10) + 1);
+        }
     });
 });
