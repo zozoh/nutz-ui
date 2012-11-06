@@ -1,7 +1,6 @@
 (function($) {
     var NM_JQ = 'floatdiv-jq';
     var NM_OPT = 'floatdiv-opt';
-    var NM_FUNC = 'floatdiv-func';
     var NM_DIV = 'floatdiv-div'; // 存放到宿主对象里的 DIV
     // 根据 div 中的一个 DOM 元素（包括 floatdiv 本身），获取一个帮助对象
     var getHelper = function(ele) {
@@ -168,28 +167,28 @@
             }
 
             // 绑定用户自定义事件
-            // FIXME 
-            // 这里有个bug 因为是在on_show以后调用，也是就html已经生成完毕后
-            // 如果一部分html是动态生成的，就没有NM_FUNC的绑定了，而且一个元素上无法绑定多个事件
             for (var key in opt.events) {
-                var func = opt.events[key];
-                if (typeof func == 'function') {
-                    var m = /^(([a-z]+)(:))?(.*)$/.exec(key);
-                    var eventType = $.trim(m[2] ? m[2] : 'click');
-                    var selector = $.trim(m[4]);
-                    div.find(selector).each(function() {
-                        $(this).attr(NM_FUNC, key);
-                    });
-                    div.delegate(selector, eventType, function(e) {
-                        var helper = getHelper(this);
-                        var funcKey = $(this).attr(NM_FUNC);
-                        if(!funcKey) {
-                            funcKey = '.' + this.className;
-                        }   
-                        var func = helper.option.events[funcKey];
+                var m = /^(([a-z]+)(:))?(.*)$/.exec(key);
+                var selector = $.trim(m[4]);
+                var eventType = $.trim(m[2] ? m[2] : 'click');
+                div.delegate(selector, eventType, function(e) {
+                    var helper = getHelper(this);
+                    var func = null;
+                    // 查找对应的事件映射
+                    for (var key in helper.option.events) {
+                        var m = /^(([a-z]+)(:))?(.*)$/.exec(key);
+                        var eventType = $.trim(m[2] ? m[2] : 'click');
+                        var selector = $.trim(m[4]);
+                        var jEle = helper.div.find(selector);
+                        if (jEle.is(this)) {
+                            func = helper.option.events[key];
+                            break;
+                        }
+                    }
+                    if (func) {
                         func.call(this, e, helper);
-                    });
-                }
+                    }
+                });
             }
 
             // 返回自身以便链式赋值
