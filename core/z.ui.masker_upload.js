@@ -77,7 +77,7 @@
         var maskerOpt = {
             title: opt.title,
             closeable: true,
-            width: 500,
+            width: 600,
             height: '*',
             url: opt.url,
             headers: opt.headers || {},

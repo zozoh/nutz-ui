@@ -1,0 +1,73 @@
+.objs-list .objs-funcs {
+    position: absolute;
+    top:4px;
+    right:4px;
+    display: none;
+}
+
+.objs-list .objs-funci {
+    float: left;
+    padding:0 4px;
+    border-left:1px solid rgba(255,255,255,0.3);
+    color:#CCC;
+}
+
+.objs-list .objs-funci:hover {
+    color:#FFF;
+    text-shadow:0 0 3px #FFF;
+}
+
+.objs-list .objs-item-text {
+    font-size:14px;
+    color:#DDD;
+    padding:0 200px 0 20px;
+}
+
+.objs-list .objs-item-icon {
+    position: absolute;
+    top:4px;
+    left:6px;
+    width:16px;
+    height:16px;
+    border-radius: 2px;
+}
+
+.objs-list .objs-item-lm {
+    position: absolute;
+    top:4px;
+    right:6px;
+    font-size:10px;
+    color:rgba(255,255,255,0.6);
+    padding:0 4px;
+    border-left:1px solid rgba(0,0,0,0.1);
+}
+
+.objs-list .objs-item-ow {
+    position: absolute;
+    top:4px;
+    right:130px;
+    color:#CCC;
+    padding:0 4px;
+    border-left:1px solid rgba(0,0,0,0.1);
+}
+
+.objs-list .objs-item {
+    position: relative;
+    padding:4px 10px;
+    border-bottom:1px solid rgba(0,0,0,0.1);
+}
+
+.objs-list .objs-item:hover {
+    background: rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.objs-list .objs-item:hover .objs-funcs {
+    display: block;
+}
+
+.objs-list .objs-item:hover .objs-item-lm,
+.objs-list .objs-item:hover .objs-item-ow,
+.objs-list .objs-item:hover .objs-item-sz {
+    opacity: 0.2;
+}

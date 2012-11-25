@@ -1,0 +1,124 @@
+.explorer-bubble {
+    height: 28px;
+}
+
+.explorer-func {
+    height:40px;
+    padding:5px;
+    position: relative;
+    background: rgba(0,0,0,0.4);
+}
+
+.explorer-search {
+    float:left;
+    padding:0 8px 0 0;
+}
+
+.explorer-search-keyword {
+    font-size: 12px;
+    padding:4px 6px;
+    width:200px;
+    vertical-align: middle;
+}
+
+.explorer-modes {
+    float:left;
+}
+
+.explorer-modes-ul {
+    list-style: none;
+    padding: 4px 6px;
+    margin: 0;
+}
+
+.explorer-modes-li {
+    float: left;
+    padding:4px 6px;
+    cursor:pointer;
+}
+
+.explorer-modes-li:hover {
+    color:#FFF;
+}
+
+.explorer-actions {
+    position: absolute;
+    right:0;
+    top:0;
+    width:200px;
+    height:100%;   
+}
+
+.explorer-actions-container {
+    position: relative;
+    width: 100%;
+    height:100%;
+
+}
+
+.explorer-actions-pin {
+    padding:8px 8px 2px 2px;
+    text-align: right;
+}
+
+.explorer-actioni {
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 2px;
+}
+
+.explorer-actioni:hover {
+    background: rgba(255,255,255,0.4);
+}
+
+.explorer-actions-pin .explorer-actioni {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.explorer-actions-more {
+    position: absolute;
+    top:8px;
+    right:2px;
+    padding:4px 6px 4px 6px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.explorer-actions-more:hover {
+    background: rgba(255,255,0,0.4);
+}
+
+.explorer-actions-more-menu {
+    width:160px;
+    background: rgba(255,255,255,0.8);
+    padding:8px;
+    border-radius: 2px;
+    line-height: 20px;
+    z-index: 100;
+    display: none;
+}
+
+.explorer-actions-more-menu .explorer-actioni {
+    display: block;
+}
+
+.explore-action-more-sepa {
+    border-bottom:1px dashed #AAA;
+    margin:8px 0 8px 0;
+}
+
+.explorer-objs {
+    background: rgba(0,0,0,0.3);
+}
+
+.explorer-objs .explorer-obj-node .objs-item-icon {
+    background: #AA0;
+}
+
+
+.explorer-loading {
+    font-size:14px;
+    color:#EEE;
+    padding:20px;
+}

@@ -437,15 +437,16 @@
                 throw "Uknown uname '" + str + "'!!!";
             }
             return {
-                pin: m[1].indexOf('#') >= 0,
                 // 是否是要固定显示的字符串
-                beginGroup: m[1].indexOf('~') >= 0,
+                pin: m[1].indexOf('#') >= 0,
                 // 是否重新开始一组
-                className: m[3],
+                beginGroup: m[1].indexOf('~') >= 0,
                 // 选择器名称
-                name: m[5],
+                className: m[3],
                 // 消息字符串键值
-                text: this.msg(m[5]) // 变成多国语言后的文本
+                name: m[5],
+                // 变成多国语言后的文本
+                text: this.msg(m[5])
             };
         },
         /*----------------------------------------------------------------------
@@ -462,7 +463,7 @@
             try {
                 var li = $('#__msg__ .' + key.replace(/[.]/g, '_'));
                 return li.size() > 0 ? $(li[0]).html() : (defval ? defval : key);
-            } catch(E){
+            } catch (E) {
                 return defval;
             }
         },

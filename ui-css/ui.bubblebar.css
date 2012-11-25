@@ -1,0 +1,41 @@
+.bbar {
+    padding: 2px;
+}
+
+.bbar-ul {
+    
+}
+
+.bbar-li {
+    position: relative;
+    float:left;
+    padding:4px 18px 4px 4px;
+    cursor:pointer;
+    border-radius: 2px;
+}
+
+.bbar-li:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top:6px;
+    right:2px;
+    width:0;
+    height:0;
+    border-style:solid;
+    border-width:5px;
+    border-color:transparent transparent transparent #BBB;
+}
+
+.bbar-li:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.bbar-li-hlt, .bbar-li-hlt:hover {
+    background: rgba(255,255,0,0.3);
+}
+
+.bbar-li-tmp {
+    opacity: 0.4;
+}
+
