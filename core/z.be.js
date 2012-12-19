@@ -37,7 +37,8 @@
             var html = opt.holder || '<div class="z_remove_holder">&nbsp;</div>';
             var holder = $(html).css({
                 'width': w,
-                'height': h
+                'height': h,
+                'display': 'inline-block'
             }).insertAfter(jq);
             // 删除元素
             if (opt.appendTo) {
