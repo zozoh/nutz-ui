@@ -48,7 +48,7 @@
                 var div = this.data(NM_DIV);
                 var helper = getHelper(div);
                 var opt = helper.option;
-                adjustPosition(this, div, opt.dockAt, opt.padding);
+                div.dockAt(this, opt.dockAt, opt.padding);
                 return this;
             }
             close_all_floatdiv();

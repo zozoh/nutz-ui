@@ -123,8 +123,12 @@ body, td, th, font, p {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* 默认body不显示滚动条 */
+/* 默认body不显示滚动条, 主要是针对富客户端应用，body不应该超出窗口视图的边界 */
 body {
-    margin: 0;
     overflow: hidden;
+}
+
+/* __msg__ 隐藏用 */
+#__msg__.hdn {
+    display: none;
 }

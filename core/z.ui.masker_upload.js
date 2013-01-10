@@ -12,6 +12,7 @@
  * 本文件依赖:
  *   > z.js
  *   > z.sys.js
+ *   > z.str.js
  *   > z.ajax.upload.js
  *   > z.ui.masker
  *
@@ -20,7 +21,7 @@
  */
 (function($, $z) {
     function appendFileToList(file, jList) {
-        var html = '<ul class="masker-upload-fi masker-upload-fi-new cfloat">';
+        var html = html += '<ul class="masker-upload-fi masker-upload-fi-new cfloat">';
         html += '<li class="masker-upload-fi-type">' + file.type + '</li>';
         html += '<li class="masker-upload-fi-size">' + $z.str.sizeText(file.size) + '</li>';
         html += '<li class="masker-upload-fi-name">' + file.name + '</li>';
@@ -39,14 +40,20 @@
         jq.prevAll().removeClass('masker-upload-fi-ing');
         jq.removeClass('masker-upload-fi-new').addClass('masker-upload-fi-ing');
         // 准备调用
+        var toUpFile = jq.data('upload-file');
         $z.ajax.upload({
-            file: jq.data('upload-file'),
+            file: toUpFile,
             url: helper.option.url,
-            headers: $.extend(true, {}, helper.option.headers),
+            headers: $.extend(true, {
+                // 给几个默认参数
+                '_file_nm_': toUpFile.name,
+                '_file_type_': toUpFile.type,
+                '_file_size_': toUpFile.size
+            }, helper.option.headers),
             on_ok: function(re) {
                 jq.removeClass('masker-upload-fi-ing').addClass('masker-upload-fi-done');
                 // 如果全部完成
-                if (helper.body.find('.masker-upload-fi-done').size() == helper.body.find('.masker-upload-fi')) {
+                if (helper.body.find('.masker-upload-fi-done').size() == helper.body.find('.masker-upload-fi').size()) {
                     if (helper.option.closeWhenAllDone) {
                         $z.ui.masker('close');
                     }
@@ -82,8 +89,14 @@
             url: opt.url,
             headers: opt.headers || {},
             done: opt.done ||
+            function() {},
+            closeWhenAllDone: opt.closeWhenAllDone || false,
+            on_close: opt.on_close ||
             function() {}
         };
+
+        // 按钮
+        maskerOpt.btns = $.extend(true, {}, (opt.btns || {}));
 
         // 事件   
         maskerOpt.events = {
@@ -95,6 +108,14 @@
                     return;
                 }
                 do_upload(helper, jq);
+            },
+            '.masker-upload-cancel': function() {
+                // 直接关闭吧, 应该是判断是否在上传中, 上传了了的话取消后面的
+                $z.ui.masker('close');
+            },
+            '.masker-upload-clear': function() {
+                var helper = $z.ui.masker('helper');
+                helper.body.find('.masker-upload-list').empty();
             },
             'change:.masker-upload-file': function() {
                 var jList = $z.ui.masker('helper').body.find('.masker-upload-list');
@@ -132,7 +153,8 @@
             html += '<div class="masker-upload-picker">';
             html += '    <input type="file" class="masker-upload-file" multiple="">';
             html += '    <b class="btn masker-upload-submit">' + $z.ui.msg('masker.upload.submit') + '</b>';
-            html += '    <b class="btn masker-upload-submit">' + $z.ui.msg('masker.upload.cancel') + '</b>';
+            html += '    <b class="btn masker-upload-cancel">' + $z.ui.msg('masker.upload.cancel') + '</b>';
+            html += '    <b class="btn masker-upload-clear">' + $z.ui.msg('masker.upload.clear') + '</b>';
             html += '</div>';
             html += '<div class="masker-upload-tip">' + $z.ui.msg('masker.upload.tip') + '</div>';
             html += '<div class="masker-upload-main"><div class="masker-upload-list"></div></div>';

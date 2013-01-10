@@ -22,7 +22,8 @@
 
         },
         on_depose: function() {
-
+            this.selection.undelegate();
+            this.selection.empty();
         },
         // 绑定事件
         events: {

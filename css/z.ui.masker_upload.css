@@ -1,0 +1,143 @@
+.masker-upload {
+    width: 100%;
+    height: 100%;
+    overflow:hidden;
+    border-radius:2px;
+}
+
+.masker-upload-list {
+    width:100%;
+    height:100%;
+    background-color: rgba(255,255,255, 0.4);
+    border:3px dashed #CCC;
+    border-radius: 8px;
+    overflow:auto;
+    padding: 10px 8px 20px 8px;
+}
+
+.masker-upload-list-dragover {
+    border-color:#F80;
+    box-shadow:0 0 10px #FFF;
+    background-color: rgba(255,255,255, 0.6);
+}
+
+.masker-upload-fi {
+    list-style:none;
+    margin:1px 0 0 0;
+    padding: 6px 6px;
+    font-size:14px;
+    position:relative;
+    border-radius: 2px;
+}
+
+.masker-upload-fi-new{
+    font-style: Italic;
+}
+
+.masker-upload-fi-err{
+    background-color:#FCC;
+    color:#F00;
+}
+
+.masker-upload-fi-ing {
+    background-color:#888;
+    color:#FFF;
+}
+
+.masker-upload-fi-ing .masker-upload-fi-type {
+    color:#CCC;
+}
+
+.masker-upload-fi-ing .masker-upload-fi-name {
+    color:#FFF;
+}
+
+.masker-upload-fi-ing .masker-upload-fi-size {
+    color:#0F0;
+}
+
+.masker-upload-fi-done {
+    color:#666;
+    opacity: 0.5;
+    text-decoration: line-through;;
+}
+
+.masker-upload-fi li {
+    float:left;
+    padding-right: 8px;
+}
+
+.masker-upload-fi li.masker-upload-fi-process{
+    position:absolute;
+    top:4px;
+    right:2px;
+}
+
+.masker-upload-bar {
+    width: 100px;
+    border:1px solid #DDD;
+    border-radius:2px;
+}
+
+.masker-upload-bar-inner{
+    width:0;
+    height:18px;
+    line-height:18px;
+    background:#080;
+    color:#FFF;
+    font-size:8px;
+    text-align: center;
+}
+
+.masker-upload-bar {
+    width:
+}
+
+.masker-upload-fi-type {
+    color:#666;
+    width:20%;
+    font-size:10px;
+}
+
+.masker-upload-fi-size {
+    color:#080;
+    width:20%;
+}
+
+.masker-upload-fi-name {
+    width:58%;
+}
+
+
+.masker-upload-file {
+    font-size: 14px;
+    color:#0E0;
+}
+
+.masker-upload-tip {
+    padding: 0 16px;
+    font-size: 11px;
+    color:#EEE;
+    text-align:right;
+}
+
+.masker-upload-picker {
+    line-height:40px;
+    height:40px;
+    padding:0 10px;
+}
+
+.masker-upload-picker .btn {
+    float:right;
+    margin:4px;
+    cursor: pointer;
+}
+
+.masker-upload-picker .btn:hover {
+    text-decoration: underline;
+}
+
+.masker-upload-main {
+    padding: 10px;
+}
+

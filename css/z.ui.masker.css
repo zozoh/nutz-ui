@@ -1,0 +1,51 @@
+.__masker_ele {
+    opacity: 0.2;
+}
+
+.masker-title {
+    font-size:14px;
+    height:48px;
+    line-height: 48px;
+    padding:0 16px;
+    color:#EEE;
+    text-shadow: 0 0 2px #FFF;
+    text-align: center;
+}
+
+.masker-btns {
+    list-style: none;
+    padding: 10px;
+    margin:0;
+    border-top:1px solid rgba(255,255,255,0.2);
+    background-color:rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.masker-btns li {
+    display: inline-block;
+    vertical-align: middle;
+    margin:0 6px;
+    padding:6px 12px;
+    font-size:14px;
+    color:#BBB;
+    border-radius: 4px;
+    background-color:rgba(0,0,0,0.2);
+    cursor:pointer;
+}
+
+.masker-btns li:hover {
+    background-color:rgba(0,0,0,0.1);
+    color:#FFF;
+}
+
+.masker-closer {
+    color: #CCC;
+    padding:6px;
+    font-size:10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.masker-closer:hover{
+    color:#FFF;
+}

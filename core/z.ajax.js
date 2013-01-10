@@ -3,6 +3,7 @@
  *
  * 本文件依赖:
  *   > z.js
+ *   > z.obj.js
  *
  * @author  zozoh(zozohtnt@gmail.com)
  * 2012-10 First created
