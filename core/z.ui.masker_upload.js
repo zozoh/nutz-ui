@@ -21,7 +21,7 @@
  */
 (function($, $z) {
     function appendFileToList(file, jList) {
-        var html = html += '<ul class="masker-upload-fi masker-upload-fi-new cfloat">';
+        var html = '<ul class="masker-upload-fi masker-upload-fi-new cfloat">';
         html += '<li class="masker-upload-fi-type">' + file.type + '</li>';
         html += '<li class="masker-upload-fi-size">' + $z.str.sizeText(file.size) + '</li>';
         html += '<li class="masker-upload-fi-name">' + file.name + '</li>';
