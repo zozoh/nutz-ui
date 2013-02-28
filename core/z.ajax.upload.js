@@ -57,9 +57,11 @@
 
         // 准备请求对象头部信息
         var contentType = "application/x-www-form-urlencoded; charset=utf-8";
+        // var contentType = "multipart/form-data";
         xhr.open("POST", opt.url, true);
         xhr.setRequestHeader('Content-type', contentType)
         xhr.setRequestHeader(opt.fileName, "" + encodeURI(opt.file.name));
+        xhr.setRequestHeader('Content-Disposition', 'attachment; filename="' + encodeURI(opt.file.name) + '"');
 
         // 加入更多的头信息
         if (opt.headers) {
@@ -68,6 +70,9 @@
             }
         }
 
+        // var formData = new FormData(); // 建立一个upload表单项，值为上传的文件
+        // formData.append('upload_file', opt.file, opt.file.name);
+        // xhr.send(formData)
         // 执行上传
         xhr.send(opt.file);
     });

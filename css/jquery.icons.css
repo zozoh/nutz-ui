@@ -1,31 +1,41 @@
 .jq-icon {
-
-}
-
-.jq-icon-16 {
     display: block;
-    width: 16px;
-    height: 16px;
     background: url('img/jquery.icons.png');
 }
 
+.jq-icon.i-16 {
+    width: 16px;
+    height: 16px;
+}
 
-.jq-icon-16.arrow-down {
+.jq-icon.i-24 {
+    width: 24px;
+    height: 24px;
+}
+
+.jq-icon.i-16.arrow-down {
     background-position: -16px 0px;
 }
-.jq-icon-16.white-arrow-up {
+.jq-icon.i-16.white-arrow-up {
     background-position: 0px -32px;
 }
-.jq-icon-16.white-arrow-down {
+.jq-icon.i-16.white-arrow-down {
     background-position: -16px -32px;
 }
-.jq-icon-16.white-arrow-left {
+.jq-icon.i-16.white-arrow-left {
     background-position: -32px -32px;
 }
-.jq-icon-16.white-arrow-right {
+.jq-icon.i-16.white-arrow-right {
     background-position: -48px -32px;
 }
 
+.jq-icon.i-24.plist {
+    background-position: 0px -64px;
+}
+
+.jq-icon.i-24.video {
+    background-position: 0px -88px;
+}
 
 .jq-loading-16 {
     display: block;

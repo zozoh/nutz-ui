@@ -151,7 +151,7 @@
         maskerOpt.on_show = function() {
             var html = '<div class="masker-upload">';
             html += '<div class="masker-upload-picker">';
-            html += '    <input type="file" class="masker-upload-file" multiple="">';
+            html += '    <input type="file" name="upload_file" class="masker-upload-file"  multiple="multiple">';
             html += '    <b class="btn masker-upload-submit">' + $z.ui.msg('masker.upload.submit') + '</b>';
             html += '    <b class="btn masker-upload-cancel">' + $z.ui.msg('masker.upload.cancel') + '</b>';
             html += '    <b class="btn masker-upload-clear">' + $z.ui.msg('masker.upload.clear') + '</b>';
