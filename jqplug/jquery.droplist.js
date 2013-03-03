@@ -414,7 +414,7 @@
                     opt.fdiv = null;
                 },
                 events: {
-                    'change:.droplist-dl-filter-val': events.filter_change,
+                    'change:.droplist-dl-filter-val': events.,
                     '.droplist-dl-container': events.fdiv_click,
                     '.droplist-dl-filter': events.filter_focus,
                     '.droplist-dldc-li-item': events.dl_item_click,

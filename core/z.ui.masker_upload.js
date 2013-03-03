@@ -46,8 +46,9 @@
             url: helper.option.url,
             headers: $.extend(true, {
                 // 给几个默认参数
+                // '_file_nm_': encodeURI(toUpFile.name),
                 '_file_nm_': toUpFile.name,
-                '_file_type_': toUpFile.type,
+                '_file_type_': encodeURI(toUpFile.type),
                 '_file_size_': toUpFile.size
             }, helper.option.headers),
             on_ok: function(re) {

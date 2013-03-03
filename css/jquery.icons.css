@@ -41,5 +41,19 @@
     display: block;
     width: 16px;
     height: 16px;
-    background: url('img/loading_001.gif');
+    background: url('img/loading_16.gif');
+}
+
+.jq-loading-32 {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url('img/loading_32.gif');
+}
+
+.jq-loading-128 {
+    display: block;
+    width: 128px;
+    height: 128px;
+    background: url('img/loading_128.gif');
 }

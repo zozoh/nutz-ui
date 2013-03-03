@@ -61,7 +61,7 @@
         xhr.open("POST", opt.url, true);
         xhr.setRequestHeader('Content-type', contentType)
         xhr.setRequestHeader(opt.fileName, "" + encodeURI(opt.file.name));
-        xhr.setRequestHeader('Content-Disposition', 'attachment; filename="' + encodeURI(opt.file.name) + '"');
+        // xhr.setRequestHeader('Content-Disposition', 'attachment; filename="' + encodeURI(opt.file.name) + '"');
 
         // 加入更多的头信息
         if (opt.headers) {
