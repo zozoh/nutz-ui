@@ -162,13 +162,13 @@
                 // 如果是 "@bind.ID:gasketName" 格式的字符串
                 if (m) {
                     selector = bind;
-                    opt = gasketName;
+                    option = gasketName;
                     gasketName = m[4];
                 }
                 // 否则就是根控件的绑定方式
                 else {
                     selector = bind;
-                    opt = gasketName;
+                    option = gasketName;
                     gasketName = null;
                 }
             }
@@ -179,7 +179,7 @@
             // 如果是jq对象或dom对象
             else if ($(bind).size() > 0) {
                 selector = bind;
-                opt = gasketName;
+                option = gasketName;
                 gasketName = null;
                 selection = $(bind);
             }
