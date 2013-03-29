@@ -1,0 +1,11 @@
+.win {
+    background: #888;
+    position: relative;
+}
+
+.win-inner {
+    background: #080;
+    width: 450px;
+    height: 220px;
+    position: absolute;
+}
