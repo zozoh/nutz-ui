@@ -12,9 +12,9 @@
         <!-- JavaScript -->
         <script type="text/javascript" src="../lib/jquery.js" ></script>
         <script type="text/javascript" src="../core/z.js" ></script>
-        <script type="text/javascript" src="../jqplug/jquery.position.js" ></script>
+        <script type="text/javascript" src="../jqplug/jquery.poppos.js" ></script>
         
-        <link rel="stylesheet" type="text/css" href="css/test.position.css">
+        <link rel="stylesheet" type="text/css" href="css/test.poppos.css">
         <style>
 
         </style>
@@ -30,9 +30,9 @@
                     'height': window.innerHeight
                 });
 
-                // $('.win').position('.win-inner');
+                $('.win').poppos('.win-inner');
                 // $.position('.win','.win-inner', 'center');
-                $.position('.win','.win-inner', 'topright');
+                // $.position('.win','.win-inner');
             }
         </script>
     </head>
