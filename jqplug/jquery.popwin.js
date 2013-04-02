@@ -48,7 +48,7 @@
 
             // 设置填充的动画效果 && 设置消失效果
             if ('fadeIn' == opt.effect) {
-                // child.css({'opacity' : 0});
+                child.hide();
                 child.fadeIn("slow", function() {
                     opt.fadeFunc(pp);
                 });
