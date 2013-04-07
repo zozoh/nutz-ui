@@ -8,7 +8,7 @@
     //     'effect': 'fadein',
     //     'duration': 200,
     //     'childFunc': function() {},
-    //     'fadeFunc': function(pop) {}
+    //     'fadeFunc': function(pp) {}
     // }
 
     var NUM = 0;
@@ -18,8 +18,19 @@
         return "pp" + NUM;
     }
 
+    function checkOpt(opt) {
+        return $.extend(true, {
+            'pos' : 'center',
+            'effect' : 'fadein',
+            'duration': 200,
+            'fadeFunc' : function(pp) {}
+        }, opt);
+    }
+
     $.fn.extend({
         popwin: function(opt) {
+
+            opt = checkOpt(opt);
 
             var body = $(this);
 
@@ -63,6 +74,8 @@
                     opt.fadeFunc(pp);
                 });
             }
+
+            return pp;
         }
     });
 })(window.jQuery)
