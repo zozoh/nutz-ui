@@ -73,8 +73,39 @@
                 }, opt.duration, function() {
                     opt.fadeFunc(pp);
                 });
-            }
+            }else if('lefttoright' == opt.effect){
+                //定位选区在左侧
+                child.css({
+                    'left':pp.width()
+                });
+                child.animate({
+                    'left': 0
+                },opt.duration,function(){
+                    opt.fadeFunc(pp);
+                });
 
+            }else if('around' == opt.effect){
+                child.animate({
+                    'left': '-'+(window.innerWidth - pp.width())
+                },opt.duration);
+
+                child.animate({
+                    'top': window.innerHeight - pp.height(),
+                    'left': '-'+(window.innerWidth - pp.width())
+                },opt.duration);
+
+                child.animate({
+                    'top': window.innerHeight - pp.height(),
+                    'left': 0
+                },opt.duration);
+
+                child.animate({
+                    'top': 0,
+                    'left':0
+                },opt.duration,function(){
+                    opt.fadeFunc(child);
+                });
+            }
             return pp;
         }
     });
