@@ -14,7 +14,11 @@
     // 显示错误
     // TODO 这里暂时先 alert 吧 ^_^! ...
     function ajaxError(e) {
-        alert('Ajax Error!\n' + $z.obj.dump(e));
+        if (typeof e == 'string') {
+            alert(e);
+        } else {
+            alert('Ajax Error!\n' + $z.obj.dump(e));
+        }
     }
 
     // 统一处理 Ajax 的返回
@@ -121,12 +125,12 @@
                 form = null;
             }
             var whenDone = function(text) {
-                    if ($z.str.startsWith(text, ERR_PREFIX)) {
-                        ajaxError(text.substring(ERR_PREFIX.length));
-                        return;
-                    }
-                    if (typeof callback == 'function') callback(text);
-                };
+                if ($z.str.startsWith(text, ERR_PREFIX)) {
+                    ajaxError(text.substring(ERR_PREFIX.length));
+                    return;
+                }
+                if (typeof callback == 'function') callback(text);
+            };
             var ajaxOption = {
                 url: url,
                 data: form,
@@ -243,7 +247,8 @@
             if (target) html += '  target="' + target + '"';
             html += '></form>';
             var jForm = $(html).appendTo(document.body);
-            if (form) for (var key in form) $('<textarea name="' + key + '"></textarea>').appendTo(jForm).text(form[key]);
+            if (form)
+                for (var key in form) $('<textarea name="' + key + '"></textarea>').appendTo(jForm).text(form[key]);
             jForm.submit();
         },
         // 普通 HTTP POST 请求 > 页面刷新
@@ -256,7 +261,8 @@
             if (target) html += '  target="' + target + '"';
             html += '></form>';
             var jForm = $(html).appendTo(document.body);
-            if (form) for (var key in form) $('<textarea name="' + key + '"></textarea>').appendTo(jForm).text(form[key]);
+            if (form)
+                for (var key in form) $('<textarea name="' + key + '"></textarea>').appendTo(jForm).text(form[key]);
             jForm.submit();
         }
     });

@@ -1,0 +1,12 @@
+/bin
+/*.classpath
+/*.project
+/tmp/
+/.settings/
+*.DS_Store
+/target/
+/build
+/mores
+/root
+/performance
+/.idea
